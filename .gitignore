@@ -12,6 +12,7 @@ tex2pdf*
 .idea
 .vscode
 .pdm-python
+.venv/*
 
 02_crowsnest/crowsnest.py
 03_picnic/picnic.py
