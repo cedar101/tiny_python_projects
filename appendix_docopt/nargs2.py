@@ -1,35 +1,31 @@
 #!/usr/bin/env python3
-"""nargs=2"""
+"""
+usage: nargs2.py [-h] <num> <num>
 
-import argparse
+positional arguments:
+  <num>         Numbers
+
+options:
+  -h, --help  show this help message and exit
+"""
+from decimal import Decimal
+
+from docopt import docopt
+from box import Box
 
 
 # --------------------------------------------------
 def get_args():
-    """get args"""
-
-    parser = argparse.ArgumentParser(
-        description='nargs=2',
-        formatter_class=argparse.ArgumentDefaultsHelpFormatter)
-
-    parser.add_argument('numbers',
-                        metavar='int',
-                        nargs=2,
-                        type=int,
-                        help='Numbers')
-
-    return parser.parse_args()
+    return Box(docopt(__doc__))
 
 
 # --------------------------------------------------
 def main():
-    """main"""
-
     args = get_args()
-    n1, n2 = args.numbers
-    print(f'{n1} + {n2} = {n1 + n2}')
+    n1, n2 = args.num_
+    print(f"{n1} + {n2} = {Decimal(n1) + Decimal(n2)}")
 
 
 # --------------------------------------------------
-if __name__ == '__main__':
+if __name__ == "__main__":
     main()

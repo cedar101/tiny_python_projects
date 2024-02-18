@@ -6,27 +6,47 @@ Two positional arguments
 
 positional arguments:
   <color>       The color of the garment
-  <size>        The size of the garment
+  <size>        The size of the garment [type: int]
 
 options:
   -h, --help  show this help message and exit
 """
 
-from docopt import docopt
-from box import Box
+import sys
+
+from docopt import docopt, DocoptExit
+from pydantic import ConfigDict, AliasGenerator, ValidationError
+from pydantic.dataclasses import dataclass
+
+
+TRACEBACK_LIMIT = 1000
+
+
+@dataclass(
+    config=ConfigDict(
+        alias_generator=AliasGenerator(
+            validation_alias=lambda field_name: f"<{field_name}>"
+        )
+    )
+)
+class GarmentArguments:
+    color: str
+    size: int
 
 
 # --------------------------------------------------
 def get_args():
-    # TODO: use Pydantic
-    return Box(docopt(__doc__))
+    try:
+        return GarmentArguments(**docopt(__doc__))
+    except ValidationError as e:
+        raise DocoptExit(str(e)) from e
 
 
 # --------------------------------------------------
 def main():
     args = get_args()
-    print("color =", args.color_)
-    print("size =", args.size_)
+    print("color =", args.color)
+    print("size =", args.size)
 
 
 # --------------------------------------------------

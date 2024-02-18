@@ -1,27 +1,29 @@
 #!/usr/bin/env python3
-"""Python version of `cat -n`, manually checking file argument"""
+"""
+usage: cat_n_manual.py [-h] <file>
 
-import argparse
-import os
+Python version of `cat -n`, manually checking and opening file argument
+
+positional arguments:
+  file         Input file [type: path]
+
+options:
+  -h, --help  show this help message and exit
+"""
+
+from pathlib import Path
+
+from docopt import docopt, DocoptExit
+from box import Box
 
 
 # --------------------------------------------------
 def get_args():
     """Get command-line arguments"""
-
-    parser = argparse.ArgumentParser(
-        description='Python version of `cat -n`',
-        formatter_class=argparse.ArgumentDefaultsHelpFormatter)
-
-    parser.add_argument('file', metavar='str', type=str, help='Input file')
-
-    args = parser.parse_args()
-
-    if not os.path.isfile(args.file):
-        parser.error(f'"{args.file}" is not a file')
-
-    args.file = open(args.file)
-
+    args = Box(docopt(__doc__))
+    args.file = Path(args.file_)
+    if not args.file.is_file():
+        raise DocoptExit(f'"{args.file}" is not a file')
     return args
 
 
@@ -30,11 +32,11 @@ def main():
     """Make a jazz noise here"""
 
     args = get_args()
-
-    for i, line in enumerate(args.file, start=1):
-        print(f'{i:6}  {line}', end='')
+    with args.file.open() as f:
+        for i, line in enumerate(f, start=1):
+            print(f"{i:6}  {line}", end="")
 
 
 # --------------------------------------------------
-if __name__ == '__main__':
+if __name__ == "__main__":
     main()
