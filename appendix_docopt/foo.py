@@ -37,11 +37,11 @@ def main():
     flag_arg = args.on
     pos_arg = args.positional_
 
-    print(f'str_arg = "{str_arg}"')
+    print(f"str_arg = {str_arg!r}")
     print(f"int_arg = {int_arg}")
-    print('file_arg = "{}"'.format(file_arg.name if file_arg else ""))
+    print(f"file_arg = {file_arg.name if file_arg else ''!r}")
     print(f"flag_arg = {flag_arg}")
-    print(f'positional = "{pos_arg}"')
+    print(f"positional = {pos_arg!r}")
 
 
 if __name__ == "__main__":
