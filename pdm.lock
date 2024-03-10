@@ -5,7 +5,7 @@
 groups = ["default", "dev"]
 strategy = ["cross_platform", "inherit_metadata"]
 lock_version = "4.4.1"
-content_hash = "sha256:bccdb7bbf89b9ee2c11fc61b03957a61468f83023ebefe243bb9b0ae201157aa"
+content_hash = "sha256:f19f7a35e4f36e81e401ad46c6d890be50282190b3a2b3d972881d6f67c3a7d2"
 
 [[package]]
 name = "annotated-types"
@@ -404,6 +404,17 @@ dependencies = [
 files = [
     {file = "prompt_toolkit-3.0.43-py3-none-any.whl", hash = "sha256:a11a29cb3bf0a28a387fe5122cdb649816a957cd9261dcedf8c9f1fef33eacf6"},
     {file = "prompt_toolkit-3.0.43.tar.gz", hash = "sha256:3527b7af26106cbc65a040bcc84839a3566ec1b051bb0bfe953631e704b0ff7d"},
+]
+
+[[package]]
+name = "pronunciation-dictionary"
+version = "0.0.5"
+requires_python = "<4,>=3.8"
+summary = "Library to load and save pronunciation dictionaries (any language)."
+groups = ["default"]
+files = [
+    {file = "pronunciation-dictionary-0.0.5.tar.gz", hash = "sha256:dedb841fb3cbf4df8fc621456576df84c81358e42fb5b1f3cc254cb3082f115a"},
+    {file = "pronunciation_dictionary-0.0.5-py3-none-any.whl", hash = "sha256:f26b288b73d14cea211fa41f4fe0344cf175882093c38f1d46b48bef8faf70bb"},
 ]
 
 [[package]]

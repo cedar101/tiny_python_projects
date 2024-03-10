@@ -3,7 +3,7 @@
 Author:  Ken Youens-Clark <kyclark@gmail.com>
 Purpose: Say hello
 
-Usage: hello08_formatted.py [-h] [-n NAME]
+Usage: hello.py [-h] [-n NAME]
 
 options:
   -h, --help            show this help message and exit

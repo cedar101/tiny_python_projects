@@ -17,14 +17,10 @@ options:
 # parser.add_argument("name", help="Name to greet")
 # args = parser.parse_args()
 
-# from argopt import argopt
-
-# parser = argopt(__doc__)  # , version=__version__)
-# args = parser.parse_args()
-
 from docopt import docopt
 from box import Box
 
+# print(docopt(__doc__))
 args = Box(docopt(__doc__))  # , version=__version__)
 
 print(f"Hello, {args.name_}!")

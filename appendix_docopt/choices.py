@@ -19,7 +19,7 @@ from pydantic import Field, ConfigDict, AliasGenerator, ValidationError
 from pydantic.dataclasses import dataclass
 
 
-TRACEBACK_LIMIT = 1000
+# TRACEBACK_LIMIT = 1000
 COLOR_LITERALS = typing.Literal["red", "yellow", "blue"]
 SIZE_CHOICES = tuple(range(1, 11))
 
@@ -33,7 +33,7 @@ SIZE_CHOICES = tuple(range(1, 11))
 )
 class GarmentArguments:
     color: COLOR_LITERALS
-    size: int = Field(ge=SIZE_CHOICES[0], lt=SIZE_CHOICES[-1])
+    size: int = Field(ge=SIZE_CHOICES[0], le=SIZE_CHOICES[-1])
 
 
 # --------------------------------------------------

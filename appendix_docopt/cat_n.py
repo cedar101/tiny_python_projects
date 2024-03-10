@@ -1,6 +1,6 @@
 #!/usr/bin/env python3
 """
-usage: cat_n_manual.py [-h] <file>
+usage: cat_n.py [-h] <file>
 
 Python version of `cat -n`, manually checking and opening file argument
 

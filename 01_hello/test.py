@@ -2,7 +2,7 @@
 """tests for hello.py"""
 
 import os
-from subprocess import getstatusoutput, getoutput
+from subprocess import check_output
 
 prg = "./hello.py"
 
@@ -18,16 +18,16 @@ def test_exists():
 def test_runnable():
     """Runs using python3"""
 
-    out = getoutput(f"python3 {prg}")
-    assert out.strip() == "Hello, World!"
+    out = check_output(["python3", prg])
+    assert out.strip() == b"Hello, World!"
 
 
 # --------------------------------------------------
 def test_executable():
     """Says 'Hello, World!' by default"""
 
-    out = getoutput(prg)
-    assert out.strip() == "Hello, World!"
+    out = check_output([prg])
+    assert out.strip() == b"Hello, World!"
 
 
 # --------------------------------------------------
@@ -35,10 +35,8 @@ def test_usage():
     """usage"""
 
     for flag in ["-h", "--help"]:
-        rv, out = getstatusoutput(f"{prg} {flag}")
-        assert rv == 0
-        # assert out.lower().startswith('usage')
-        assert "usage" in out.lower()
+        out = check_output([prg, flag])
+        assert b"usage" in out.lower()
 
 
 # --------------------------------------------------
@@ -47,6 +45,5 @@ def test_input():
 
     for val in ["Universe", "Multiverse"]:
         for option in ["-n", "--name"]:
-            rv, out = getstatusoutput(f"{prg} {option} {val}")
-            assert rv == 0
+            out = check_output([prg, option, val], text=True)
             assert out.strip() == f"Hello, {val}!"

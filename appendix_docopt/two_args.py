@@ -12,14 +12,9 @@ options:
   -h, --help  show this help message and exit
 """
 
-import sys
-
 from docopt import docopt, DocoptExit
 from pydantic import ConfigDict, AliasGenerator, ValidationError
 from pydantic.dataclasses import dataclass
-
-
-TRACEBACK_LIMIT = 1000
 
 
 @dataclass(

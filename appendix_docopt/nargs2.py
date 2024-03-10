@@ -23,6 +23,7 @@ def get_args():
 def main():
     args = get_args()
     n1, n2 = args.num_
+    # print(f"{n1} + {n2} = {float(n1) + float(n2)}")
     print(f"{n1} + {n2} = {Decimal(n1) + Decimal(n2)}")
 
 
