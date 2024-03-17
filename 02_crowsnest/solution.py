@@ -16,7 +16,7 @@ options:
 from pathlib import *
 
 from box import Box
-from docopt import docopt
+from docopt import docopt, DocoptExit
 from pronunciation_dictionary import (
     DeserializationOptions,
     MultiprocessingOptions,
@@ -34,16 +34,17 @@ def get_args():
 # --------------------------------------------------
 def main():
     """Make a jazz noise here"""
+
+    args = get_args()
+    side = "starboard" if args.starboard else "larboard"
+    words = args.word_
+
     dictionary = load_dict(
         Path("data/cmudict.dict"),
         "ISO-8859-1",
         DeserializationOptions(False, True, True, False),
         MultiprocessingOptions(8, None, 10000),
     )
-
-    args = get_args()
-    side = "starboard" if args.starboard else "larboard"
-    words = args.word_
 
     for word in words:
         article = choose_article_dict(word, dictionary)
