@@ -14,42 +14,38 @@ from pronunciation_dictionary import (
 from crowsnest import choose_article, choose_article_dict
 
 
-@pytest.fixture
-def consonant_words():
-    return [
-        "brigantine",
-        "clipper",
-        "dreadnought",
-        "frigate",
-        "galleon",
-        "haddock",
-        "junk",
-        "ketch",
-        "longboat",
-        "mullet",
-        "narwhal",
-        "porpoise",
-        "quay",
-        "regatta",
-        "submarine",
-        "tanker",
-        "vessel",
-        "whale",
-        "xebec",
-        "yatch",
-        "zebrafish",
-    ]
+consonant_words = [
+    "brigantine",
+    "clipper",
+    "dreadnought",
+    "frigate",
+    "galleon",
+    "haddock",
+    "junk",
+    "ketch",
+    "longboat",
+    "mullet",
+    "narwhal",
+    "porpoise",
+    "quay",
+    "regatta",
+    "submarine",
+    "tanker",
+    "vessel",
+    "whale",
+    "xebec",
+    "yatch",
+    "zebrafish",
+]
 
 
-@pytest.fixture
-def vowel_words():
-    return ["aviso", "eel", "iceberg", "octopus", "upbound", "hour", "honor", "heir"]
+vowel_words = ["aviso", "eel", "iceberg", "octopus", "upbound", "hour", "honor", "heir"]
 
 
 template = "{} {}"
 
 
-@pytest.fixture
+@pytest.fixture(scope="session")
 def dictionary():
     return load_dict(
         Path("data/cmudict.dict"),
@@ -60,56 +56,56 @@ def dictionary():
 
 
 # --------------------------------------------------
-def test_consonant(consonant_words):
+@pytest.mark.parametrize("word", consonant_words)
+def test_consonant(word):
     """brigantine -> a brigantine"""
-    for word in consonant_words:
-        assert choose_article(word) == "a"
+    assert choose_article(word) == "a"
 
 
 # --------------------------------------------------
-def test_consonant_upper(consonant_words):
+@pytest.mark.parametrize("word", consonant_words)
+def test_consonant_upper(word):
     """brigantine -> A Brigantine"""
-    for word in consonant_words:
-        assert choose_article(word.title()) == "A"
+    assert choose_article(word.title()) == "A"
 
 
 # --------------------------------------------------
-def test_vowel(vowel_words):
+@pytest.mark.parametrize("word", vowel_words)
+def test_vowel(word):
     """octopus -> an octopus"""
-    for word in vowel_words:
-        assert choose_article(word) == "an"
+    assert choose_article(word) == "an"
 
 
 # --------------------------------------------------
-def test_vowel_upper(vowel_words):
+@pytest.mark.parametrize("word", vowel_words)
+def test_vowel_upper(word):
     """octopus -> an Octopus"""
-    for word in vowel_words:
-        assert choose_article(word.title()) == "An"
+    assert choose_article(word.title()) == "An"
 
 
 # --------------------------------------------------
-def test_consonant_dict(consonant_words, dictionary):
+@pytest.mark.parametrize("word", consonant_words)
+def test_consonant_dict(word, dictionary):
     """brigantine -> a brigantine"""
-    for word in consonant_words:
-        assert choose_article_dict(word, dictionary) == "a"
+    assert choose_article_dict(word, dictionary) == "a"
 
 
 # --------------------------------------------------
-def test_consonant_upper_dict(consonant_words, dictionary):
+@pytest.mark.parametrize("word", consonant_words)
+def test_consonant_upper_dict(word, dictionary):
     """brigantine -> a Brigantine"""
-    for word in consonant_words:
-        assert choose_article_dict(word.title(), dictionary) == "A"
+    assert choose_article_dict(word.title(), dictionary) == "A"
 
 
 # --------------------------------------------------
-def test_vowel_dict(vowel_words, dictionary):
+@pytest.mark.parametrize("word", vowel_words)
+def test_vowel_dict(word, dictionary):
     """octopus -> an octopus"""
-    for word in vowel_words:
-        assert choose_article_dict(word, dictionary) == "an"
+    assert choose_article_dict(word, dictionary) == "an"
 
 
 # --------------------------------------------------
-def test_vowel_upper_dict(vowel_words, dictionary):
+@pytest.mark.parametrize("word", vowel_words)
+def test_vowel_upper_dict(word, dictionary):
     """octopus -> an Octopus"""
-    for word in vowel_words:
-        assert choose_article_dict(word.title(), dictionary) == "An"
+    assert choose_article_dict(word.title(), dictionary) == "An"
