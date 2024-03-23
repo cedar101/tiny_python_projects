@@ -1,28 +1,27 @@
 #!/usr/bin/env python3
-"""Picnic game"""
+"""
+usage: solution.py [-h] [-s] <item>...
 
-import argparse
+Picnic game
+
+positional arguments:
+  <item>           Item(s) to bring
+
+options:
+  -h, --help    show this help message and exit
+  -s, --sorted  Sort the items [default: False]
+"""
+
+from box import Box
+from docopt import docopt
+
+from picnic import serial_comma
 
 
 # --------------------------------------------------
 def get_args():
     """Get command-line arguments"""
-
-    parser = argparse.ArgumentParser(
-        description='Picnic game',
-        formatter_class=argparse.ArgumentDefaultsHelpFormatter)
-
-    parser.add_argument('item',
-                        metavar='str',
-                        nargs='+',
-                        help='Item(s) to bring')
-
-    parser.add_argument('-s',
-                        '--sorted',
-                        action='store_true',
-                        help='Sort the items')
-
-    return parser.parse_args()
+    return Box(docopt(__doc__))
 
 
 # --------------------------------------------------
@@ -30,24 +29,15 @@ def main():
     """Make a jazz noise here"""
 
     args = get_args()
-    items = args.item
-    num = len(items)
+    items = args.item_
 
     if args.sorted:
         items.sort()
 
-    bringing = ''
-    if num == 1:
-        bringing = items[0]
-    elif num == 2:
-        bringing = ' and '.join(items)
-    else:
-        items[-1] = 'and ' + items[-1]
-        bringing = ', '.join(items)
-
-    print('You are bringing {}.'.format(bringing))
+    bringing = serial_comma(items)
+    print("You are bringing {}.".format(bringing))
 
 
 # --------------------------------------------------
-if __name__ == '__main__':
+if __name__ == "__main__":
     main()
