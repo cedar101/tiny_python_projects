@@ -3,7 +3,7 @@
 
 import pytest
 
-from picnic import serial_comma
+from picnic import serial_comma, no_serial_comma
 
 
 # --------------------------------------------------
@@ -19,7 +19,16 @@ def test_two():
 
 
 # --------------------------------------------------
-def test_more_than_two():
+def test_more_than_two_no_serial():
+    """more than two items"""
+    assert (
+        no_serial_comma(["potato chips", "coleslaw", "cupcakes", "French silk pie"])
+        == "potato chips, coleslaw, cupcakes and French silk pie"
+    )
+
+
+# --------------------------------------------------
+def test_more_than_two_serial():
     """more than two items"""
     assert (
         serial_comma(["potato chips", "coleslaw", "cupcakes", "French silk pie"])

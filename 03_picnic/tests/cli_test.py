@@ -47,13 +47,25 @@ def test_two(programs):
 
 
 # --------------------------------------------------
-def test_more_than_two(programs):
+def test_more_than_two_serial(programs):
+    """more than two items"""
+    for prg in programs:
+        args = ["potato chips", "coleslaw", "cupcakes", "French silk pie"]
+        out = check_output([prg, "--serial"] + args, text=True)
+        expected = (
+            "You are bringing potato chips, coleslaw, cupcakes, and French silk pie."
+        )
+        assert out.strip() == expected
+
+
+# --------------------------------------------------
+def test_more_than_two_no_serial(programs):
     """more than two items"""
     for prg in programs:
         args = ["potato chips", "coleslaw", "cupcakes", "French silk pie"]
         out = check_output([prg] + args, text=True)
         expected = (
-            "You are bringing potato chips, coleslaw, cupcakes, and French silk pie."
+            "You are bringing potato chips, coleslaw, cupcakes and French silk pie."
         )
         assert out.strip() == expected
 
@@ -62,15 +74,25 @@ def test_more_than_two(programs):
 def test_two_sorted(programs):
     """two items sorted output"""
     for prg in programs:
-        out = check_output([prg, "-s", "soda", "candy"], text=True)
+        out = check_output([prg, "--sort", "soda", "candy"], text=True)
         assert out.strip() == "You are bringing candy and soda."
 
 
 # --------------------------------------------------
-def test_more_than_two_sorted(programs):
+def test_more_than_two_sorted_serial(programs):
     """more than two items sorted output"""
     for prg in programs:
         args = ["bananas", "apples", "dates", "cherries"]
-        out = check_output([prg] + args + ["--sorted"], text=True)
+        out = check_output([prg, "--sort", "--serial"] + args, text=True)
         expected = "You are bringing apples, bananas, cherries, and dates."
+        assert out.strip() == expected
+
+
+# --------------------------------------------------
+def test_more_than_two_sorted_no_serial(programs):
+    """more than two items sorted output"""
+    for prg in programs:
+        args = ["bananas", "apples", "dates", "cherries"]
+        out = check_output([prg, "--sort"] + args, text=True)
+        expected = "You are bringing apples, bananas, cherries and dates."
         assert out.strip() == expected

@@ -1,21 +1,22 @@
 #!/usr/bin/env python3
 """
-usage: solution.py [-h] [-s] <item>...
+usage: solution.py [-h] [--sort | --sorted] [--serial | --oxford] <item>...
 
 Picnic game
 
 positional arguments:
-  <item>           Item(s) to bring
+  <item>              Item(s) to bring
 
 options:
-  -h, --help    show this help message and exit
-  -s, --sorted  Sort the items [default: False]
+  -h, --help          Show this help message and exit
+  --sort, --sorted    Sort the items [default: False]
+  --serial, --oxford  Use serial comma (Oxford comma)
 """
 
 from box import Box
 from docopt import docopt
 
-from picnic import serial_comma
+from picnic import serial_comma, no_serial_comma
 
 
 # --------------------------------------------------
@@ -31,10 +32,13 @@ def main():
     args = get_args()
     items = args.item_
 
-    if args.sorted:
+    if args.sort or args.sorted:
         items.sort()
 
-    bringing = serial_comma(items)
+    if args.serial or args.oxford:
+        bringing = serial_comma(items)
+    else:
+        bringing = no_serial_comma(items)
     print("You are bringing {}.".format(bringing))
 
 
