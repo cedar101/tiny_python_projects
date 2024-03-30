@@ -16,7 +16,7 @@ options:
 from box import Box
 from docopt import docopt
 
-from picnic import serial_comma, no_serial_comma
+from picnic import english_enumerate
 
 
 # --------------------------------------------------
@@ -35,10 +35,7 @@ def main():
     if args.sort or args.sorted:
         items.sort()
 
-    if args.serial or args.oxford:
-        bringing = serial_comma(items)
-    else:
-        bringing = no_serial_comma(items)
+    bringing = english_enumerate(items, args.serial or args.oxford)
     print("You are bringing {}.".format(bringing))
 
 

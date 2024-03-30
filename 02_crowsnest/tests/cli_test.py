@@ -7,8 +7,6 @@ from subprocess import check_output
 
 import pytest
 
-prg = "./crowsnest.py"
-
 
 @pytest.fixture
 def consonant_words():
@@ -45,7 +43,7 @@ def vowel_words():
 template = "Ahoy, Captain, {} {} off the larboard bow!"
 
 
-@pytest.fixture
+@pytest.fixture(scope="session")
 def programs():
     return [f"./{p}" for p in Path(".").glob("solution*.py")]
 
