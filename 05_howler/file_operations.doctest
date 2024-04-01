@@ -1,0 +1,66 @@
+#!/usr/bin/env python -m doctest -o IGNORE_EXCEPTION_DETAIL
+
+5.1. 파일 읽기
+
+>>> from pathlib import Path
+>>> Path('blargh').is_file()
+False
+>>> Path('blargh').exists()
+False
+
+>>> file1 = '/var/lib/db.txt'
+>>> p = Path(file1)
+>>> print(p.parent)
+/var/lib
+>>> p.name
+'db.txt'
+
+>>> file2 = '../inputs/fox.txt'
+>>> Path(file2).is_file()
+True
+>>> Path(file2).exists()
+True
+
+>>> not_found_file = 'blargh'
+>>> with open(not_found_file) as f:
+...     pass
+Traceback (most recent call last):
+FileNotFoundError: [Errno 2] No such file or directory: 'blargh'
+
+>>> try:
+...     with open(not_found_file) as f:
+...         pass
+... except FileNotFoundError:
+...     print(f"The file '{not_found_file}' is not found.")
+The file 'blargh' is not found.
+
+>>> with open(file2) as f:
+...     print(type(f))
+<class '_io.TextIOWrapper'>
+
+>>> with open(file2) as f:
+...     print(f.read())
+The quick brown fox jumps over the lazy dog.
+<BLANKLINE>
+>>> with open(file2) as f:
+...     print(f.read().rstrip())
+The quick brown fox jumps over the lazy dog.
+>>> with Path(file2).open() as f:
+...     print(f.read().rstrip())
+The quick brown fox jumps over the lazy dog.
+>>> Path(file2).read_text().rstrip()
+'The quick brown fox jumps over the lazy dog.'
+
+5.2. 파일 쓰기
+
+>>> p = Path('out.txt')
+>>> with p.open('wt') as out_file:
+...     first_line_len = out_file.write('this is some text\n')
+...     print('this is some more text', file=out_file)
+>>> first_line_len
+18
+>>> p.read_text()
+'this is some text\nthis is some more text\n'
+>>> p.unlink()
+>>> p.exists()
+False

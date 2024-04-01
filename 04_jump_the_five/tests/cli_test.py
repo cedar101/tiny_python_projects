@@ -23,21 +23,21 @@ def test_usage(prg):
     """usage"""
 
     for flag in ["-h", "--help"]:
-        out = check_output([prg, flag], text=True)
-        assert "usage" in out.lower()
+        out = check_output([prg, flag])
+        assert b"usage" in out.lower()
 
 
 # --------------------------------------------------
 @pytest.mark.parametrize("prg", programs)
 def test_01(prg):
     """test"""
-    out = check_output([prg, "123-456-7890"], text=True)
-    assert out.rstrip() == "987-604-3215"
+    out = check_output([prg, "123-456-7890"])
+    assert out.rstrip() == b"987-604-3215"
 
 
 # --------------------------------------------------
 @pytest.mark.parametrize("prg", programs)
 def test_02(prg):
     """test"""
-    out = check_output([prg, "That number to call is 098-765-4321."], text=True)
-    assert out.rstrip() == "That number to call is 512-340-6789."
+    out = check_output([prg, "That number to call is 098-765-4321."])
+    assert out.rstrip() == b"That number to call is 512-340-6789."

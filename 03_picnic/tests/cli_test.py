@@ -24,24 +24,24 @@ def test_usage(programs):
     """usage"""
     for prg in programs:
         for flag in ["-h", "--help"]:
-            out = check_output([prg, flag], text=True)
-            assert "usage" in out.lower()
+            out = check_output([prg, flag])
+            assert b"usage" in out.lower()
 
 
 # --------------------------------------------------
 def test_one(programs):
     """one item"""
     for prg in programs:
-        out = check_output([prg, "chips"], text=True)
-        assert out.strip() == "You are bringing chips."
+        out = check_output([prg, "chips"])
+        assert out.strip() == b"You are bringing chips."
 
 
 # --------------------------------------------------
 def test_two(programs):
     """two items"""
     for prg in programs:
-        out = check_output([prg, "soda", "french fries"], text=True)
-        assert out.strip() == "You are bringing soda and french fries."
+        out = check_output([prg, "soda", "french fries"])
+        assert out.strip() == b"You are bringing soda and french fries."
 
 
 # --------------------------------------------------
@@ -49,9 +49,9 @@ def test_more_than_two_serial(programs):
     """more than two items"""
     for prg in programs:
         args = ["potato chips", "coleslaw", "cupcakes", "French silk pie"]
-        out = check_output([prg, "--serial"] + args, text=True)
+        out = check_output([prg, "--serial"] + args)
         expected = (
-            "You are bringing potato chips, coleslaw, cupcakes, and French silk pie."
+            b"You are bringing potato chips, coleslaw, cupcakes, and French silk pie."
         )
         assert out.strip() == expected
 
@@ -61,9 +61,9 @@ def test_more_than_two_no_serial(programs):
     """more than two items"""
     for prg in programs:
         args = ["potato chips", "coleslaw", "cupcakes", "French silk pie"]
-        out = check_output([prg] + args, text=True)
+        out = check_output([prg] + args)
         expected = (
-            "You are bringing potato chips, coleslaw, cupcakes and French silk pie."
+            b"You are bringing potato chips, coleslaw, cupcakes and French silk pie."
         )
         assert out.strip() == expected
 
@@ -72,8 +72,8 @@ def test_more_than_two_no_serial(programs):
 def test_two_sorted(programs):
     """two items sorted output"""
     for prg in programs:
-        out = check_output([prg, "--sort", "soda", "candy"], text=True)
-        assert out.strip() == "You are bringing candy and soda."
+        out = check_output([prg, "--sort", "soda", "candy"])
+        assert out.strip() == b"You are bringing candy and soda."
 
 
 # --------------------------------------------------
@@ -81,8 +81,8 @@ def test_more_than_two_sorted_serial(programs):
     """more than two items sorted output"""
     for prg in programs:
         args = ["bananas", "apples", "dates", "cherries"]
-        out = check_output([prg, "--sort", "--serial"] + args, text=True)
-        expected = "You are bringing apples, bananas, cherries, and dates."
+        out = check_output([prg, "--sort", "--serial"] + args)
+        expected = b"You are bringing apples, bananas, cherries, and dates."
         assert out.strip() == expected
 
 
