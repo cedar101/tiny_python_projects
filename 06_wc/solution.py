@@ -1,52 +1,63 @@
 #!/usr/bin/env python3
-"""Emulate wc (word count)"""
+"""
+usage: {} [-h] [<file>...]
 
-import argparse
+Emulate wc (word count)
+
+positional arguments:
+  <file>        Input file(s) [default: sys.stdin]
+
+options:
+  -h, --help  show this help message and exit
+"""
+from typing import Any
+import io
 import sys
+from pathlib import Path
+
+from box import Box
+from docopt import docopt
 
 
 # --------------------------------------------------
-def get_args():
+def get_args() -> dict[str, Any]:
     """Get command-line arguments"""
+    args = Box(docopt(__doc__.format(Path(__file__).name)))
+    return args
 
-    parser = argparse.ArgumentParser(
-        description='Emulate wc (word count)',
-        formatter_class=argparse.ArgumentDefaultsHelpFormatter)
 
-    parser.add_argument('file',
-                        metavar='FILE',
-                        nargs='*',
-                        default=[sys.stdin],
-                        type=argparse.FileType('rt'),
-                        help='Input file(s)')
+def wc_1file(f: io.TextIOBase) -> tuple[int, int, int]:
+    num_lines, num_words, num_chars = 0, 0, 0
+    for line in f:
+        num_lines += 1
+        num_words += len(line.split())
+        num_chars += len(line)
+    return num_lines, num_words, num_chars
 
-    return parser.parse_args()
+
+def print_wc(num_lines: int, num_words: int, num_chars: int, filename: str) -> None:
+    print(f"{num_lines:8}{num_words:8}{num_chars:8} {filename}")
 
 
 # --------------------------------------------------
-def main():
-    """Make a jazz noise here"""
-
+def main() -> None:
     args = get_args()
 
-    total_lines, total_bytes, total_words = 0, 0, 0
-    for fh in args.file:
-        num_lines, num_words, num_bytes = 0, 0, 0
-        for line in fh:
-            num_lines += 1
-            num_bytes += len(line)
-            num_words += len(line.split())
+    if args.file_:
+        total_lines, total_words, total_chars = 0, 0, 0
+        for fp in args.file_:
+            with Path(fp).open() as f:
+                num_lines, num_words, num_chars = wc_1file(f)
+            print_wc(num_lines, num_words, num_chars, fp)
+            total_lines += num_lines
+            total_chars += num_chars
+            total_words += num_words
+    else:
+        total_lines, total_words, total_chars = wc_1file(sys.stdin)
 
-        total_lines += num_lines
-        total_bytes += num_bytes
-        total_words += num_words
-
-        print(f'{num_lines:8}{num_words:8}{num_bytes:8} {fh.name}')
-
-    if len(args.file) > 1:
-        print(f'{total_lines:8}{total_words:8}{total_bytes:8} total')
+    print_wc(total_lines, total_words, total_chars, "total" if args.file_ else "")
 
 
 # --------------------------------------------------
-if __name__ == '__main__':
+if __name__ == "__main__":
     main()
