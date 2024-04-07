@@ -11,12 +11,14 @@ options:
   -h, --help  show this help message and exit
 """
 from typing import Any
-import io
 import sys
 from pathlib import Path
+from contextlib import ExitStack
 
 from box import Box
 from docopt import docopt
+
+from wc import wc_1file
 
 
 # --------------------------------------------------
@@ -26,15 +28,6 @@ def get_args() -> dict[str, Any]:
     return args
 
 
-def wc_1file(f: io.TextIOBase) -> tuple[int, int, int]:
-    num_lines, num_words, num_chars = 0, 0, 0
-    for line in f:
-        num_lines += 1
-        num_words += len(line.split())
-        num_chars += len(line)
-    return num_lines, num_words, num_chars
-
-
 def print_wc(num_lines: int, num_words: int, num_chars: int, filename: str) -> None:
     print(f"{num_lines:8}{num_words:8}{num_chars:8} {filename}")
 
@@ -42,20 +35,24 @@ def print_wc(num_lines: int, num_words: int, num_chars: int, filename: str) -> N
 # --------------------------------------------------
 def main() -> None:
     args = get_args()
+    filenames = args.file_
 
-    if args.file_:
+    with ExitStack() as stack:
+        files = (
+            [stack.enter_context(Path(fname).open()) for fname in filenames]
+            if filenames
+            else [sys.stdin]
+        )
         total_lines, total_words, total_chars = 0, 0, 0
-        for fp in args.file_:
-            with Path(fp).open() as f:
-                num_lines, num_words, num_chars = wc_1file(f)
-            print_wc(num_lines, num_words, num_chars, fp)
+        for f in files:
+            num_lines, num_words, num_chars = wc_1file(f)
+            print_wc(num_lines, num_words, num_chars, f.name)
             total_lines += num_lines
             total_chars += num_chars
             total_words += num_words
-    else:
-        total_lines, total_words, total_chars = wc_1file(sys.stdin)
 
-    print_wc(total_lines, total_words, total_chars, "total" if args.file_ else "")
+    if len(files) > 1:
+        print_wc(total_lines, total_words, total_chars, "total")
 
 
 # --------------------------------------------------
