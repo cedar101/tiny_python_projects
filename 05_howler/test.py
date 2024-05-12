@@ -2,7 +2,6 @@
 """tests for howler.py"""
 
 import random
-import string
 import tempfile
 from pathlib import Path
 from subprocess import check_output

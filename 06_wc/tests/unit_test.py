@@ -5,7 +5,7 @@ from pathlib import Path
 
 import pytest
 
-from wc import wc_1file
+from wc import wc_per_file, print_per_file
 
 empty = "inputs/empty.txt"
 one_line = "inputs/one.txt"
@@ -27,4 +27,4 @@ sonnet = "../inputs/sonnet-29.txt"
 )
 def test_wc_1file(test_input, expected):
     with Path(test_input).open() as f:
-        assert wc_1file(f) == expected
+        assert wc_per_file(f) == expected

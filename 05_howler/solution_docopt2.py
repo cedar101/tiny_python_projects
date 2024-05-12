@@ -37,7 +37,7 @@ def main():
     outfile = args.outfile
     with (
         io.StringIO(text) if isinstance(text, str) else text.open() as infile,
-        outfile.open("w") if outfile else sys.stdout as outfile,
+        sys.stdout if outfile is None else outfile.open("w") as outfile,
     ):
         for line in infile:
             outfile.write(line.upper())

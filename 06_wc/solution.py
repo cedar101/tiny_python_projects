@@ -18,7 +18,7 @@ from contextlib import ExitStack
 from box import Box
 from docopt import docopt
 
-from wc import wc_1file
+from wc import wc_per_file, print_per_file
 
 
 # --------------------------------------------------
@@ -26,10 +26,6 @@ def get_args() -> dict[str, Any]:
     """Get command-line arguments"""
     args = Box(docopt(__doc__.format(Path(__file__).name)))
     return args
-
-
-def print_wc(num_lines: int, num_words: int, num_chars: int, filename: str) -> None:
-    print(f"{num_lines:8}{num_words:8}{num_chars:8} {filename}")
 
 
 # --------------------------------------------------
@@ -43,16 +39,16 @@ def main() -> None:
             if filenames
             else [sys.stdin]
         )
-        total_lines, total_words, total_chars = 0, 0, 0
+        total_lines, total_words, total_bytes = 0, 0, 0
         for f in files:
-            num_lines, num_words, num_chars = wc_1file(f)
-            print_wc(num_lines, num_words, num_chars, f.name)
+            num_lines, num_words, num_chars = wc_per_file(f)
+            print_per_file(num_lines, num_words, num_chars, f.name)
             total_lines += num_lines
-            total_chars += num_chars
+            total_bytes += num_chars
             total_words += num_words
 
     if len(files) > 1:
-        print_wc(total_lines, total_words, total_chars, "total")
+        print_per_file(total_lines, total_words, total_bytes, "total")
 
 
 # --------------------------------------------------
