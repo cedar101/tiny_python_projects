@@ -12,17 +12,25 @@ options:
   -v vowel, --vowel vowel
                         The vowel to substitute [choices: a e i o u] [default: a]
 """
-
+from collections.abc import Generator
 from pathlib import Path
 
 from box import Box
 from type_docopt import docopt, DocoptExit
 
 
+def replace_vowels_gen(text: str, vowel: str = "a") -> Generator[str]:
+    for char in text:
+        if char in "aeiou":
+            yield vowel
+        elif char in "AEIOU":
+            yield vowel.upper()
+        else:
+            yield char
+
+
 def replace_vowels(text: str, vowel: str = "a") -> str:
-    return "".join(
-        vowel if c in "aeiou" else vowel.upper() if c in "AEIOU" else c for c in text
-    )
+    return "".join(replace_vowels_gen(text, vowel))
 
 
 # --------------------------------------------------

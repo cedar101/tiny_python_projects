@@ -19,10 +19,15 @@ from box import Box
 from type_docopt import docopt, DocoptExit
 
 
+# --------------------------------------------------
+def new_char(char, vowel):
+    """Return the given vowel if a char is a vowel else the char"""
+    return vowel if char in "aeiou" else vowel.upper() if char in "AEIOU" else char
+
+
+# --------------------------------------------------
 def replace_vowels(text: str, vowel: str = "a") -> str:
-    return "".join(
-        vowel if c in "aeiou" else vowel.upper() if c in "AEIOU" else c for c in text
-    )
+    return "".join(new_char(c, vowel) for c in text)
 
 
 # --------------------------------------------------
@@ -49,7 +54,6 @@ def main():
     args = get_args()
     text = args.text_
     vowel = args.vowel
-
     print(replace_vowels(text, vowel))
 
 

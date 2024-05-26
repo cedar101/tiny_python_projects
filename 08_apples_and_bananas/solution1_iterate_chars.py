@@ -1,32 +1,50 @@
 #!/usr/bin/env python3
-"""Apples and Bananas"""
+"""
+usage: {} [-h] [-v vowel] <text>
 
-import argparse
-import os
+Apples and bananas
+
+positional arguments:
+  <text>                  Input text or file
+
+options:
+  -h, --help            show this help message and exit
+  -v vowel, --vowel vowel
+                        The vowel to substitute [choices: a e i o u] [default: a]
+"""
+
+from pathlib import Path
+
+from box import Box
+from type_docopt import docopt, DocoptExit
+
+
+def replace_vowels(text: str, vowel: str = "a") -> str:
+    new_text = []
+    for char in text:
+        if char in "aeiou":
+            new_text.append(vowel)
+        elif char in "AEIOU":
+            new_text.append(vowel.upper())
+        else:
+            new_text.append(char)
+
+    return "".join(new_text)
 
 
 # --------------------------------------------------
 def get_args():
-    """get command-line arguments"""
+    docstring = __doc__.format(Path(__file__).name)
+    try:
+        args = Box(docopt(docstring))
+    except ValueError as e:
+        strerr = str(e)
+        print(f"error: invalid choice: {strerr}" if "is not in" in strerr else strerr)
+        raise DocoptExit from e
 
-    parser = argparse.ArgumentParser(
-        description='Apples and bananas',
-        formatter_class=argparse.ArgumentDefaultsHelpFormatter)
-
-    parser.add_argument('text', metavar='text', help='Input text or file')
-
-    parser.add_argument('-v',
-                        '--vowel',
-                        help='The vowel to substitute',
-                        metavar='vowel',
-                        type=str,
-                        default='a',
-                        choices=list('aeiou'))
-
-    args = parser.parse_args()
-
-    if os.path.isfile(args.text):
-        args.text = open(args.text).read().rstrip()
+    p = Path(args.text_)
+    if p.is_file():
+        args.text_ = p.read_text()
 
     return args
 
@@ -36,21 +54,12 @@ def main():
     """Make a jazz noise here"""
 
     args = get_args()
-    text = args.text
+    text = args.text_
     vowel = args.vowel
-    new_text = []
 
-    for char in text:
-        if char in 'aeiou':
-            new_text.append(vowel)
-        elif char in 'AEIOU':
-            new_text.append(vowel.upper())
-        else:
-            new_text.append(char)
-
-    print(''.join(new_text))
+    print(replace_vowels(text, vowel))
 
 
 # --------------------------------------------------
-if __name__ == '__main__':
+if __name__ == "__main__":
     main()
