@@ -10,7 +10,7 @@ positional arguments:
 options:
   -h, --help            show this help message and exit
   -v vowel, --vowel vowel
-                        The vowel to substitute [choices: a e i o u] [default: a]
+                        The vowel to substitute [choices: a e i o u] [default: a] [type: str]
 """
 import re
 from pathlib import Path
