@@ -13,7 +13,7 @@ options:
 from typing import Any
 import sys
 from pathlib import Path
-from contextlib import ExitStack
+import fileinput
 
 from box import Box
 from docopt import docopt
@@ -33,22 +33,29 @@ def main() -> None:
     args = get_args()
     filenames = args.file_
 
-    with ExitStack() as stack:
-        files = (
-            [stack.enter_context(Path(fname).open()) for fname in filenames]
-            if filenames
-            else [sys.stdin]
-        )
-        total_lines, total_words, total_bytes = 0, 0, 0
-        for f in files:
-            num_lines, num_words, num_bytes = wc_per_file(f)
-            print_per_file(num_lines, num_words, num_bytes, f.name)
-            total_lines += num_lines
+    total_words, total_bytes, num_lines, num_words, num_bytes = 0, 0, 0, 0, 0
+    # breakpoint()
+    if not filenames:
+        filenames = ["-"]
+    filename = filenames[0]
+    for line in fileinput.input(filenames):
+        if fileinput.isfirstline() and filename != fileinput.filename():
             total_bytes += num_bytes
             total_words += num_words
+            print_per_file(num_lines, num_words, num_bytes, filename)
+            num_lines, num_words, num_bytes = 0, 0, 0
+            filename = fileinput.filename()
 
-    if len(files) > 1:
-        print_per_file(total_lines, total_words, total_bytes, "total")
+        num_lines = fileinput.filelineno()
+        num_words += len(line.split())
+        num_bytes += len(line.encode())
+
+    print_per_file(num_lines, num_words, num_bytes, fileinput.filename())
+    total_bytes += num_bytes
+    total_words += num_words
+
+    if len(filenames) > 1:
+        print_per_file(fileinput.lineno(), total_words, total_bytes, "total")
 
 
 # --------------------------------------------------
