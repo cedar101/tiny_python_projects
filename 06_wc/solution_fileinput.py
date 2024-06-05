@@ -29,7 +29,6 @@ def get_args() -> dict[str, Any]:
     return args
 
 
-# --------------------------------------------------
 def open_check_empty(filename, mode="r"):
     p = Path(filename)
     if p.stat().st_size == 0:
@@ -37,19 +36,20 @@ def open_check_empty(filename, mode="r"):
     return p.open(mode)
 
 
+def wc_per_file(group):
+    num_words, num_bytes = 0, 0
+    for line in group:
+        num_lines = fileinput.filelineno()
+        num_words += len(line.split())
+        num_bytes += len(line.encode())
+    return num_lines, num_words, num_bytes
+
+
 # --------------------------------------------------
 def main() -> None:
     args = get_args()
     filenames = args.file_
     total_words, total_bytes = 0, 0
-
-    def wc_per_file(group):
-        num_words, num_bytes = 0, 0
-        for line in group:
-            num_lines = fileinput.filelineno()
-            num_words += len(line.split())
-            num_bytes += len(line.encode())
-        return num_lines, num_words, num_bytes
 
     if not filenames:
         filenames = ["-"]
