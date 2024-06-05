@@ -1,6 +1,6 @@
 from abc import ABC, abstractmethod
 from enum import Flag, auto
-from dataclasses import make_dataclass
+from dataclasses import dataclass, InitVar, make_dataclass
 
 
 class OptionFlag(Flag):
@@ -14,52 +14,80 @@ class OptionFlag(Flag):
         return f"{self.name.lower()}"
 
 
-# class FileCountData(ABC):
-#     # def __init__(self, file: TextIO):
-#     #     self.file = file
+class ContentCounter(ABC):
+    def __set_name__(self, owner, name):
+        self.private_name = "_" + name
 
-#     def count(self):
-#         self.reset()
-#         for line in self.file:
-#             self.increase()
+    def __get__(self, obj, objtype=None):
+        return getattr(obj, self.private_name)
 
-#     @abstractmethod
-#     def reset(self): ...
+    def __set__(self, obj, value):
+        setattr(obj, self.private_name, value)
 
-#     @abstractmethod
-#     def increase(self): ...
+    @abstractmethod
+    def count(self, line):
+        self.__get__()
 
 
-class FileLineCountData(FileCountData):
-    def reset(self):
-        self.lines = 0
+class LineCounter(ContentCounter):
+    def count(self, line):
+        
+
+    # @dataclass
+    # class FileCounter:
+    #     bytes: int
+    #     words: int
+    #     lines: int
+    #     chars: int
+    #     options: InitVar[OptionFlag]
+
+    #     def __post_init__(self, options):
+    #         for opt in options:
+
+    # class FileCountData(ABC):
+    #     # def __init__(self, file: TextIO):
+    #     #     self.file = file
+
+    #     def count(self):
+    #         self.reset()
+    #         for line in self.file:
+    #             self.increase()
+
+    #     @abstractmethod
+    #     def reset(self): ...
+
+    #     @abstractmethod
+    #     def increase(self): ...
+
+    # class ContentCountData(ABC):
+    #     def __init__(self, value):
+
+    #     def reset(self):
+    #         self._value = 0
 
     def inclease(self, line):
-        self.lines += 1
+        self.value += 1
 
-
-class FileWordCountData(FileCountData):
-    def reset(self):
-        self.words = 0
-
-    def inclease(self, line):
-        self.words += len(line.split())
-
-
-class FileByteCountData(FileCountData):
-    def reset(self):
-        self.bytes = 0
+    # class FileWordCountData:
+    #     def reset(self):
+    #         self.value = 0
 
     def inclease(self, line):
-        self.bytes += len(line.encode())
+        self.value += len(line.split())
 
-
-class FileCharCountData(FileCountData):
-    def reset(self):
-        self.chars = 0
+    # class FileByteCountData:
+    #     def reset(self):
+    #         self.value = 0
 
     def inclease(self, line):
-        self.chars += len(line)
+        self.value += len(line.encode())
+
+    # class FileCharCountData:
+    #     def reset(self):
+    #         self.value = 0
+
+    def inclease(self, line):
+        self.value += len(line)
 
 
 # class FileAllCountData(FileCountData):
