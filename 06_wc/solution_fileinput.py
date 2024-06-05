@@ -14,6 +14,7 @@ from typing import Any
 import sys
 from pathlib import Path
 import fileinput
+import itertools
 
 from box import Box
 from docopt import docopt
@@ -29,30 +30,36 @@ def get_args() -> dict[str, Any]:
 
 
 # --------------------------------------------------
+def open_check_empty(filename, mode="r"):
+    p = Path(filename)
+    if p.stat().st_size == 0:
+        print_per_file(0, 0, 0, filename)
+    return p.open(mode)
+
+
+# --------------------------------------------------
 def main() -> None:
     args = get_args()
     filenames = args.file_
 
     total_words, total_bytes, num_lines, num_words, num_bytes = 0, 0, 0, 0, 0
-    # breakpoint()
+
     if not filenames:
         filenames = ["-"]
-    filename = filenames[0]
-    for line in fileinput.input(filenames):
-        if fileinput.isfirstline() and filename != fileinput.filename():
-            total_bytes += num_bytes
-            total_words += num_words
-            print_per_file(num_lines, num_words, num_bytes, filename)
-            num_lines, num_words, num_bytes = 0, 0, 0
-            filename = fileinput.filename()
 
-        num_lines = fileinput.filelineno()
-        num_words += len(line.split())
-        num_bytes += len(line.encode())
+    for filename, group in itertools.groupby(
+        fileinput.input(filenames, openhook=open_check_empty),
+        lambda x: fileinput.filename(),
+    ):
+        for line in group:
+            num_lines = fileinput.filelineno()
+            num_words += len(line.split())
+            num_bytes += len(line.encode())
 
-    print_per_file(num_lines, num_words, num_bytes, fileinput.filename())
-    total_bytes += num_bytes
-    total_words += num_words
+        print_per_file(num_lines, num_words, num_bytes, filename)
+        total_bytes += num_bytes
+        total_words += num_words
+        num_lines, num_words, num_bytes = 0, 0, 0
 
     if len(filenames) > 1:
         print_per_file(fileinput.lineno(), total_words, total_bytes, "total")
