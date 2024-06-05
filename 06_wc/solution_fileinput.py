@@ -41,8 +41,15 @@ def open_check_empty(filename, mode="r"):
 def main() -> None:
     args = get_args()
     filenames = args.file_
+    total_words, total_bytes = 0, 0
 
-    total_words, total_bytes, num_lines, num_words, num_bytes = 0, 0, 0, 0, 0
+    def wc_per_file(group):
+        num_words, num_bytes = 0, 0
+        for line in group:
+            num_lines = fileinput.filelineno()
+            num_words += len(line.split())
+            num_bytes += len(line.encode())
+        return num_lines, num_words, num_bytes
 
     if not filenames:
         filenames = ["-"]
@@ -51,15 +58,10 @@ def main() -> None:
         fileinput.input(filenames, openhook=open_check_empty),
         lambda x: fileinput.filename(),
     ):
-        for line in group:
-            num_lines = fileinput.filelineno()
-            num_words += len(line.split())
-            num_bytes += len(line.encode())
-
+        num_lines, num_words, num_bytes = wc_per_file(group)
         print_per_file(num_lines, num_words, num_bytes, filename)
         total_bytes += num_bytes
         total_words += num_words
-        num_words, num_bytes = 0, 0
 
     if len(filenames) > 1:
         print_per_file(fileinput.lineno(), total_words, total_bytes, "total")
