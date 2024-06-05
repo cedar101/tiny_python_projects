@@ -59,7 +59,7 @@ def main() -> None:
         print_per_file(num_lines, num_words, num_bytes, filename)
         total_bytes += num_bytes
         total_words += num_words
-        num_lines, num_words, num_bytes = 0, 0, 0
+        num_words, num_bytes = 0, 0
 
     if len(filenames) > 1:
         print_per_file(fileinput.lineno(), total_words, total_bytes, "total")
