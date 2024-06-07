@@ -18,86 +18,35 @@ class ContentCounter(ABC):
     def __set_name__(self, owner, name):
         self.private_name = "_" + name
 
-    def __get__(self, obj, objtype=None):
-        return getattr(obj, self.private_name)
+    def __get__(self, instance, owner=None):
+        return getattr(instance, self.private_name)
 
-    def __set__(self, obj, value):
-        setattr(obj, self.private_name, value)
+    def __set__(self, instance, value):
+        setattr(instance, self.private_name, self.__get__(instance) + self.count(value))
 
     @abstractmethod
-    def count(self, line):
-        self.__get__()
+    def count(self, line: str) -> int:
+        pass
 
 
 class LineCounter(ContentCounter):
     def count(self, line):
-        
-
-    # @dataclass
-    # class FileCounter:
-    #     bytes: int
-    #     words: int
-    #     lines: int
-    #     chars: int
-    #     options: InitVar[OptionFlag]
-
-    #     def __post_init__(self, options):
-    #         for opt in options:
-
-    # class FileCountData(ABC):
-    #     # def __init__(self, file: TextIO):
-    #     #     self.file = file
-
-    #     def count(self):
-    #         self.reset()
-    #         for line in self.file:
-    #             self.increase()
-
-    #     @abstractmethod
-    #     def reset(self): ...
-
-    #     @abstractmethod
-    #     def increase(self): ...
-
-    # class ContentCountData(ABC):
-    #     def __init__(self, value):
-
-    #     def reset(self):
-    #         self._value = 0
-
-    def inclease(self, line):
-        self.value += 1
-
-    # class FileWordCountData:
-    #     def reset(self):
-    #         self.value = 0
-
-    def inclease(self, line):
-        self.value += len(line.split())
-
-    # class FileByteCountData:
-    #     def reset(self):
-    #         self.value = 0
-
-    def inclease(self, line):
-        self.value += len(line.encode())
-
-    # class FileCharCountData:
-    #     def reset(self):
-    #         self.value = 0
-
-    def inclease(self, line):
-        self.value += len(line)
+        return 1
 
 
-# class FileAllCountData(FileCountData):
-#     def count(self):
-#         self.num_lines, self.num_words, self.num_bytes, self.num_chars = 0, 0, 0, 0
-#         for line in self.file:
-#             self.num_lines += 1
-#             self.num_words += len(line.split())
-#             self.num_bytes += len(line.encode())
-#             self.num_chars += len(line)
+class WordCounter(ContentCounter):
+    def count(self, line):
+        return len(line.split())
+
+
+class ByteCounter(ContentCounter):
+    def count(self, line):
+        return len(line.encode())
+
+
+class CharCounter(ContentCounter):
+    def count(self, line):
+        return len(line)
 
 
 def make_counter(options: OptionFlag):
