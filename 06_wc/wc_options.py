@@ -11,7 +11,7 @@ class OptionFlag(Flag):
     ALL = LINES | WORDS | BYTES
 
     def __str__(self):
-        return f"{self.name.lower()}"
+        return f"{self.name.capitalize()}Counter"
 
 
 class ContentCounter(ABC):
@@ -22,29 +22,37 @@ class ContentCounter(ABC):
         return getattr(instance, self.private_name)
 
     def __set__(self, instance, value):
-        setattr(instance, self.private_name, self.__get__(instance) + self.count(value))
+        setattr(
+            instance,
+            self.private_name,
+            (
+                self.__get__(instance) + self.count(value)
+                if isinstance(value, str)
+                else value
+            ),
+        )
 
     @abstractmethod
     def count(self, line: str) -> int:
         pass
 
 
-class LineCounter(ContentCounter):
+class LinesCounter(ContentCounter):
     def count(self, line):
         return 1
 
 
-class WordCounter(ContentCounter):
+class WordsCounter(ContentCounter):
     def count(self, line):
         return len(line.split())
 
 
-class ByteCounter(ContentCounter):
+class BytesCounter(ContentCounter):
     def count(self, line):
         return len(line.encode())
 
 
-class CharCounter(ContentCounter):
+class CharsCounter(ContentCounter):
     def count(self, line):
         return len(line)
 
@@ -53,9 +61,6 @@ def make_counter(options: OptionFlag):
     fields = [(str(opt), int) for opt in options]
     namespace = {"reset"}
 
-    def reset(self):
-        pass
-
     make_dataclass(
-        "FileCounter",
+        fields,
     )
