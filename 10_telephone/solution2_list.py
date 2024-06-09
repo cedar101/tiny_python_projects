@@ -1,43 +1,49 @@
 #!/usr/bin/env python3
-"""Telephone"""
+"""
+usage: solution2_list.py [-h] [-s SEED] [-m MUTATIONS] <text>
 
-import argparse
-import os
+Telephone
+
+positional arguments:
+  <text>                  Input text or file
+
+options:
+  -h, --help            show this help message and exit
+  -s SEED, --seed=SEED  Random seed [type: int]
+  -m MUTATIONS, --mutations=MUTATIONS
+                        Percent mutations [type: float] [default: 0.1]
+"""
+
+from pathlib import Path
 import random
 import string
+
+from type_docopt import docopt, DocoptExit
+from box import Box
 
 
 # --------------------------------------------------
 def get_args():
     """Get command-line arguments"""
-
-    parser = argparse.ArgumentParser(
-        description='Telephone',
-        formatter_class=argparse.ArgumentDefaultsHelpFormatter)
-
-    parser.add_argument('text', metavar='text', help='Input text or file')
-
-    parser.add_argument('-s',
-                        '--seed',
-                        help='Random seed',
-                        metavar='seed',
-                        type=int,
-                        default=None)
-
-    parser.add_argument('-m',
-                        '--mutations',
-                        help='Percent mutations',
-                        metavar='mutations',
-                        type=float,
-                        default=0.1)
-
-    args = parser.parse_args()
+    docstring = __doc__.format(Path(__file__).name)
+    try:
+        args = Box(docopt(docstring))
+    except ValueError as e:
+        strerr = str(e)
+        if "invalid literal for int() with base 10" in strerr:
+            _0, _1, invalid_literal = strerr.rpartition(" ")
+            strerr = f"invalid int value: {invalid_literal}"
+        elif "could not convert string to float" in strerr:
+            _0, _1, invalid_literal = strerr.rpartition(" ")
+            strerr = f"invalid float value: {invalid_literal}"
+        raise DocoptExit(f"error: {strerr}") from e
 
     if not 0 <= args.mutations <= 1:
-        parser.error(f'--mutations "{args.mutations}" must be between 0 and 1')
+        raise DocoptExit(f'--mutations "{args.mutations}" must be between 0 and 1')
 
-    if os.path.isfile(args.text):
-        args.text = open(args.text).read().rstrip()
+    p = Path(args.text_)
+    if p.is_file():
+        args.text_ = p.read_text()
 
     return args
 
@@ -47,19 +53,19 @@ def main():
     """Make a jazz noise here"""
 
     args = get_args()
-    text = args.text
+    text = args.text_
     random.seed(args.seed)
-    alpha = ''.join(sorted(string.ascii_letters + string.punctuation))
+    alpha = string.digits + string.ascii_letters + string.punctuation
     len_text = len(text)
     num_mutations = round(args.mutations * len_text)
     new_text = list(text)
 
     for i in random.sample(range(len_text), num_mutations):
-        new_text[i] = random.choice(alpha.replace(new_text[i], ''))
+        new_text[i] = random.choice(alpha.replace(new_text[i], ""))
 
-    print('You said: "{}"\nI heard : "{}"'.format(text, ''.join(new_text)))
+    print('You said: "{}"\nI heard : "{}"'.format(text, "".join(new_text)))
 
 
 # --------------------------------------------------
-if __name__ == '__main__':
+if __name__ == "__main__":
     main()

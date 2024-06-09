@@ -30,6 +30,8 @@ def get_args() -> dict[str, Any]:
 def iter_file(filename, **kwargs):
     with Path(filename).open(**kwargs) as f:
         yield from f
+        # for line in f:
+        #     yield line
 
 
 # --------------------------------------------------
