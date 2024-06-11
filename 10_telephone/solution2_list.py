@@ -48,20 +48,25 @@ def get_args():
     return args
 
 
+def mutate_text(text, mutations=0.1, seed=None):
+    random.seed(seed)
+    alpha = string.digits + string.ascii_letters + string.punctuation
+    len_text = len(text)
+    num_mutations = round(mutations * len_text)
+    new_text = list(text)
+
+    for i in random.sample(range(len_text), num_mutations):
+        new_text[i] = random.choice(alpha.replace(new_text[i], ""))
+    return new_text
+
+
 # --------------------------------------------------
 def main():
     """Make a jazz noise here"""
 
     args = get_args()
     text = args.text_
-    random.seed(args.seed)
-    alpha = string.digits + string.ascii_letters + string.punctuation
-    len_text = len(text)
-    num_mutations = round(args.mutations * len_text)
-    new_text = list(text)
-
-    for i in random.sample(range(len_text), num_mutations):
-        new_text[i] = random.choice(alpha.replace(new_text[i], ""))
+    new_text = mutate_text(text, args.mutations, args.seed)
 
     print('You said: "{}"\nI heard : "{}"'.format(text, "".join(new_text)))
 
