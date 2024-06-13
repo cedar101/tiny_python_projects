@@ -17,6 +17,7 @@ options:
 from pathlib import Path
 import random
 import string
+from itertools import chain
 
 from type_docopt import docopt, DocoptExit
 from box import Box
@@ -49,14 +50,17 @@ def get_args():
 
 
 def mutate_text(text, mutations: float = 0.1, seed: int = None) -> str:
+    def exclude_same(i: int):
+        return alpha.replace(new_text[i], "")
+
     random.seed(seed)
-    alpha = string.digits + string.ascii_letters + string.punctuation
+    alpha = f"{string.digits}{string.ascii_letters}{string.punctuation}"
     len_text = len(text)
     num_mutations = round(mutations * len_text)
     new_text = list(text)
 
     for i in random.sample(range(len_text), num_mutations):
-        new_text[i] = random.choice(alpha.replace(new_text[i], ""))
+        new_text[i] = random.choice(exclude_same(i))
     return "".join(new_text)
 
 

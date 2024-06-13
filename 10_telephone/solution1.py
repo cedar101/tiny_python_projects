@@ -42,6 +42,9 @@ def get_args():
 
 
 def mutate_text(text, mutations: float = 0.1, seed: int = None) -> str:
+    def exclude_same(i: int):
+        return alpha.replace(new_text[i], "")
+
     random.seed(seed)
     alpha = string.digits + string.ascii_letters + string.punctuation
     len_text = len(text)
@@ -49,7 +52,7 @@ def mutate_text(text, mutations: float = 0.1, seed: int = None) -> str:
     new_text = text
 
     for i in random.sample(range(len_text), num_mutations):
-        new_char = random.choice(alpha.replace(new_text[i], ""))
+        new_char = random.choice(exclude_same(i))
         new_text = new_text[:i] + new_char + new_text[i + 1 :]
     return new_text
 
