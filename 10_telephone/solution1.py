@@ -41,7 +41,7 @@ def get_args():
     return args
 
 
-def mutate_text(text, mutations=0.1, seed=None):
+def mutate_text(text, mutations: float = 0.1, seed: int = None) -> str:
     random.seed(seed)
     alpha = string.digits + string.ascii_letters + string.punctuation
     len_text = len(text)
@@ -61,7 +61,6 @@ def main():
     args = get_args()
     text = args.text
     new_text = mutate_text(text, args.mutations, args.seed)
-
     print(f'You said: "{text}"\nI heard : "{new_text}"')
 
 

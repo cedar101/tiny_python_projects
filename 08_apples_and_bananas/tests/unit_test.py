@@ -5,8 +5,6 @@ import pytest
 from pathlib import Path
 import importlib
 
-# import solution1, solution2, solution3, solution4, solution5
-
 
 modules = [importlib.import_module(p.stem) for p in Path(".").glob("solution*.py")]
 
