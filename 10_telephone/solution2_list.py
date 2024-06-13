@@ -51,17 +51,17 @@ def get_args():
 
 def mutate_text(text, mutations: float = 0.1, seed: int = None) -> str:
     def exclude_same(i: int):
-        return alpha.replace(new_text[i], "")
+        return alpha.replace(text_list[i], "")
 
     random.seed(seed)
     alpha = f"{string.digits}{string.ascii_letters}{string.punctuation}"
     len_text = len(text)
     num_mutations = round(mutations * len_text)
-    new_text = list(text)
+    text_list = list(text)
 
     for i in random.sample(range(len_text), num_mutations):
-        new_text[i] = random.choice(exclude_same(i))
-    return "".join(new_text)
+        text_list[i] = random.choice(exclude_same(i))
+    return "".join(text_list)
 
 
 # --------------------------------------------------
