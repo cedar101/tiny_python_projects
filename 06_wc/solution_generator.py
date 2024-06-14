@@ -27,11 +27,15 @@ def get_args() -> dict[str, Any]:
     return args
 
 
-def iter_file(filename, **kwargs):
-    with Path(filename).open(**kwargs) as f:
-        yield from f
-        # for line in f:
-        #     yield line
+def with_iter(context_manager):
+    """
+    Wrap an iterable in a ``with`` statement, so it closes once exhausted.
+
+    Any context manager which returns an iterable is a candidate for
+    ``with_iter``.
+    """
+    with context_manager as iterable:
+        yield from iterable
 
 
 # --------------------------------------------------
@@ -40,7 +44,7 @@ def main() -> None:
     filenames = args.file_
 
     files = (
-        [(iter_file(fname), fname) for fname in filenames]
+        [(with_iter(Path(fname).open()), fname) for fname in filenames]
         if filenames
         else [(sys.stdin, "<stdin>")]
     )
