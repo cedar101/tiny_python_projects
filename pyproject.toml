@@ -28,9 +28,9 @@ dev = [
     "ipython",
     "mypy",
     "pylint",
-    "pytest",
     "yapf",
     "ptpython>=3.0.26",
+    "pytest>=8.2.2",
 ]
 
 [build-system]

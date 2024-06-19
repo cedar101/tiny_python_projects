@@ -5,17 +5,17 @@
 groups = ["default", "dev"]
 strategy = ["cross_platform", "inherit_metadata"]
 lock_version = "4.4.1"
-content_hash = "sha256:4b57d1779394edc873612c96aae02d4596ac4fd2c2a31402fac2910b11e76320"
+content_hash = "sha256:c39ae1757b4381ec4d89d31572722ea40038f100db2c8021721ec745227a2525"
 
 [[package]]
 name = "annotated-types"
-version = "0.6.0"
+version = "0.7.0"
 requires_python = ">=3.8"
 summary = "Reusable constraint types to use with typing.Annotated"
 groups = ["default"]
 files = [
-    {file = "annotated_types-0.6.0-py3-none-any.whl", hash = "sha256:0641064de18ba7a25dee8f96403ebc39113d0cb953a01429249d5c7564666a43"},
-    {file = "annotated_types-0.6.0.tar.gz", hash = "sha256:563339e807e53ffd9c267e99fc6d9ea23eb8443c08f112651963e24e22f84a5d"},
+    {file = "annotated_types-0.7.0-py3-none-any.whl", hash = "sha256:1f02e8b43a8fbbc3f3e0d4f0f4bfc8131bcb4eebe8849b8e5c773f3a1c582a53"},
+    {file = "annotated_types-0.7.0.tar.gz", hash = "sha256:aff07c09a53a08bc8cfccb9c85b05f1aa9a2a6f23728d790723543408344ce89"},
 ]
 
 [[package]]
@@ -146,14 +146,14 @@ files = [
 
 [[package]]
 name = "exceptiongroup"
-version = "1.2.0"
+version = "1.2.1"
 requires_python = ">=3.7"
 summary = "Backport of PEP 654 (exception groups)"
 groups = ["dev"]
 marker = "python_version < \"3.11\""
 files = [
-    {file = "exceptiongroup-1.2.0-py3-none-any.whl", hash = "sha256:4bfd3996ac73b41e9b9628b04e079f193850720ea5945fc96a08633c66912f14"},
-    {file = "exceptiongroup-1.2.0.tar.gz", hash = "sha256:91f5c769735f051a4290d52edd0858999b57e5876e9f85937691bd4c9fa3ed68"},
+    {file = "exceptiongroup-1.2.1-py3-none-any.whl", hash = "sha256:5258b9ed329c5bbdd31a309f53cbfb0b155341807f6ff7606a1e801a891b29ad"},
+    {file = "exceptiongroup-1.2.1.tar.gz", hash = "sha256:a4785e48b045528f5bfe627b6ad554ff32def154f42372786903b7abcfe1aa16"},
 ]
 
 [[package]]
@@ -169,23 +169,23 @@ files = [
 
 [[package]]
 name = "flake8"
-version = "7.0.0"
+version = "7.1.0"
 requires_python = ">=3.8.1"
 summary = "the modular source code checker: pep8 pyflakes and co"
 groups = ["dev"]
 dependencies = [
     "mccabe<0.8.0,>=0.7.0",
-    "pycodestyle<2.12.0,>=2.11.0",
+    "pycodestyle<2.13.0,>=2.12.0",
     "pyflakes<3.3.0,>=3.2.0",
 ]
 files = [
-    {file = "flake8-7.0.0-py2.py3-none-any.whl", hash = "sha256:a6dfbb75e03252917f2473ea9653f7cd799c3064e54d4c8140044c5c065f53c3"},
-    {file = "flake8-7.0.0.tar.gz", hash = "sha256:33f96621059e65eec474169085dc92bf26e7b2d47366b70be2f67ab80dc25132"},
+    {file = "flake8-7.1.0-py2.py3-none-any.whl", hash = "sha256:2e416edcc62471a64cea09353f4e7bdba32aeb079b6e360554c659a122b1bc6a"},
+    {file = "flake8-7.1.0.tar.gz", hash = "sha256:48a07b626b55236e0fb4784ee69a465fbf59d79eec1f5b4785c3d3bc57d17aa5"},
 ]
 
 [[package]]
 name = "importlib-metadata"
-version = "7.0.1"
+version = "7.1.0"
 requires_python = ">=3.8"
 summary = "Read metadata from Python packages"
 groups = ["dev"]
@@ -193,8 +193,8 @@ dependencies = [
     "zipp>=0.5",
 ]
 files = [
-    {file = "importlib_metadata-7.0.1-py3-none-any.whl", hash = "sha256:4805911c3a4ec7c3966410053e9ec6a1fecd629117df5adee56dfc9432a1081e"},
-    {file = "importlib_metadata-7.0.1.tar.gz", hash = "sha256:f238736bb06590ae52ac1fab06a3a9ef1d8dce2b7a35b5ab329371d6c8f5d2cc"},
+    {file = "importlib_metadata-7.1.0-py3-none-any.whl", hash = "sha256:30962b96c0c223483ed6cc7280e7f0199feb01a0e40cfae4d4450fc6fab1f570"},
+    {file = "importlib_metadata-7.1.0.tar.gz", hash = "sha256:b78938b926ee8d5f020fc4772d487045805a55ddbad2ecf21c6d60938dc7fcd2"},
 ]
 
 [[package]]
@@ -273,16 +273,16 @@ files = [
 
 [[package]]
 name = "matplotlib-inline"
-version = "0.1.6"
-requires_python = ">=3.5"
+version = "0.1.7"
+requires_python = ">=3.8"
 summary = "Inline Matplotlib backend for Jupyter"
 groups = ["dev"]
 dependencies = [
     "traitlets",
 ]
 files = [
-    {file = "matplotlib-inline-0.1.6.tar.gz", hash = "sha256:f887e5f10ba98e8d2b150ddcf4702c1e5f8b3a20005eb0f74bfdbd360ee6f304"},
-    {file = "matplotlib_inline-0.1.6-py3-none-any.whl", hash = "sha256:f1f41aab5328aa5aaea9b16d083b128102f8712542f819fe7e6a420ff581b311"},
+    {file = "matplotlib_inline-0.1.7-py3-none-any.whl", hash = "sha256:df192d39a4ff8f21b1895d72e6a13f5fcc5099f00fa84384e0ea28c2cc0653ca"},
+    {file = "matplotlib_inline-0.1.7.tar.gz", hash = "sha256:8423b23ec666be3d16e16b60bdd8ac4e86e840ebd1dd11a30b9f117f2fa0ab90"},
 ]
 
 [[package]]
@@ -351,24 +351,24 @@ files = [
 
 [[package]]
 name = "packaging"
-version = "23.2"
-requires_python = ">=3.7"
+version = "24.1"
+requires_python = ">=3.8"
 summary = "Core utilities for Python packages"
 groups = ["dev"]
 files = [
-    {file = "packaging-23.2-py3-none-any.whl", hash = "sha256:8c491190033a9af7e1d931d0b5dacc2ef47509b34dd0de67ed209b5203fc88c7"},
-    {file = "packaging-23.2.tar.gz", hash = "sha256:048fb0e9405036518eaaf48a55953c750c11e1a1b68e0dd1a9d62ed0c092cfc5"},
+    {file = "packaging-24.1-py3-none-any.whl", hash = "sha256:5b8f2217dbdbd2f7f384c41c628544e6d52f2d0f53c6d0c3ea61aa5d1d7ff124"},
+    {file = "packaging-24.1.tar.gz", hash = "sha256:026ed72c8ed3fcce5bf8950572258698927fd1dbda10a5e981cdf0ac37f4f002"},
 ]
 
 [[package]]
 name = "parso"
-version = "0.8.3"
+version = "0.8.4"
 requires_python = ">=3.6"
 summary = "A Python Parser"
 groups = ["dev"]
 files = [
-    {file = "parso-0.8.3-py2.py3-none-any.whl", hash = "sha256:c001d4636cd3aecdaf33cbb40aebb59b094be2a74c556778ef5576c175e19e75"},
-    {file = "parso-0.8.3.tar.gz", hash = "sha256:8c07be290bb59f03588915921e29e8a50002acaf2cdc5fa0e0114f91709fafa0"},
+    {file = "parso-0.8.4-py2.py3-none-any.whl", hash = "sha256:a418670a20291dacd2dddc80c377c5c3791378ee1e8d12bffc35420643d43f18"},
+    {file = "parso-0.8.4.tar.gz", hash = "sha256:eb3a7b58240fb99099a345571deecc0f9540ea5f4dd2fe14c2a99d6b281ab92d"},
 ]
 
 [[package]]
@@ -398,13 +398,13 @@ files = [
 
 [[package]]
 name = "platformdirs"
-version = "4.2.0"
+version = "4.2.2"
 requires_python = ">=3.8"
-summary = "A small Python package for determining appropriate platform-specific dirs, e.g. a \"user data dir\"."
+summary = "A small Python package for determining appropriate platform-specific dirs, e.g. a `user data dir`."
 groups = ["dev"]
 files = [
-    {file = "platformdirs-4.2.0-py3-none-any.whl", hash = "sha256:0614df2a2f37e1a662acbd8e2b25b92ccf8632929bc6d43467e17fe89c75e068"},
-    {file = "platformdirs-4.2.0.tar.gz", hash = "sha256:ef0cc731df711022c174543cb70a9b5bd22e5a9337c8624ef2c2ceb8ddad8768"},
+    {file = "platformdirs-4.2.2-py3-none-any.whl", hash = "sha256:2d7a1657e36a80ea911db832a8a6ece5ee53d8de21edd5cc5879af6530b1bfee"},
+    {file = "platformdirs-4.2.2.tar.gz", hash = "sha256:38b7b51f512eed9e84a22788b4bce1de17c0adb134d6becb09836e37d8654cd3"},
 ]
 
 [[package]]
@@ -420,7 +420,7 @@ files = [
 
 [[package]]
 name = "prompt-toolkit"
-version = "3.0.43"
+version = "3.0.47"
 requires_python = ">=3.7.0"
 summary = "Library for building powerful interactive command lines in Python"
 groups = ["dev"]
@@ -428,8 +428,8 @@ dependencies = [
     "wcwidth",
 ]
 files = [
-    {file = "prompt_toolkit-3.0.43-py3-none-any.whl", hash = "sha256:a11a29cb3bf0a28a387fe5122cdb649816a957cd9261dcedf8c9f1fef33eacf6"},
-    {file = "prompt_toolkit-3.0.43.tar.gz", hash = "sha256:3527b7af26106cbc65a040bcc84839a3566ec1b051bb0bfe953631e704b0ff7d"},
+    {file = "prompt_toolkit-3.0.47-py3-none-any.whl", hash = "sha256:0d7bfa67001d5e39d02c224b663abc33687405033a8c422d0d675a5a13361d10"},
+    {file = "prompt_toolkit-3.0.47.tar.gz", hash = "sha256:1e1b29cb58080b1e69f207c893a1a7bf16d127a5c30c9d17a25a5d77792e5360"},
 ]
 
 [[package]]
@@ -483,18 +483,18 @@ files = [
 
 [[package]]
 name = "pycodestyle"
-version = "2.11.1"
+version = "2.12.0"
 requires_python = ">=3.8"
 summary = "Python style guide checker"
 groups = ["dev"]
 files = [
-    {file = "pycodestyle-2.11.1-py2.py3-none-any.whl", hash = "sha256:44fe31000b2d866f2e41841b18528a505fbd7fef9017b04eff4e2648a0fadc67"},
-    {file = "pycodestyle-2.11.1.tar.gz", hash = "sha256:41ba0e7afc9752dfb53ced5489e89f8186be00e599e712660695b7a75ff2663f"},
+    {file = "pycodestyle-2.12.0-py2.py3-none-any.whl", hash = "sha256:949a39f6b86c3e1515ba1787c2022131d165a8ad271b11370a8819aa070269e4"},
+    {file = "pycodestyle-2.12.0.tar.gz", hash = "sha256:442f950141b4f43df752dd303511ffded3a04c2b6fb7f65980574f0c31e6e79c"},
 ]
 
 [[package]]
 name = "pydantic"
-version = "2.7.3"
+version = "2.7.4"
 requires_python = ">=3.8"
 summary = "Data validation using Python type hints"
 groups = ["default"]
@@ -504,8 +504,8 @@ dependencies = [
     "typing-extensions>=4.6.1",
 ]
 files = [
-    {file = "pydantic-2.7.3-py3-none-any.whl", hash = "sha256:ea91b002777bf643bb20dd717c028ec43216b24a6001a280f83877fd2655d0b4"},
-    {file = "pydantic-2.7.3.tar.gz", hash = "sha256:c46c76a40bb1296728d7a8b99aa73dd70a48c3510111ff290034f860c99c419e"},
+    {file = "pydantic-2.7.4-py3-none-any.whl", hash = "sha256:ee8538d41ccb9c0a9ad3e0e5f07bf15ed8015b481ced539a1759d8cc89ae90d0"},
+    {file = "pydantic-2.7.4.tar.gz", hash = "sha256:0c84efd9548d545f63ac0060c1e4d39bb9b14db8b3c0652338aecc07b5adec52"},
 ]
 
 [[package]]
@@ -588,13 +588,13 @@ files = [
 
 [[package]]
 name = "pygments"
-version = "2.17.2"
-requires_python = ">=3.7"
+version = "2.18.0"
+requires_python = ">=3.8"
 summary = "Pygments is a syntax highlighting package written in Python."
 groups = ["default", "dev"]
 files = [
-    {file = "pygments-2.17.2-py3-none-any.whl", hash = "sha256:b27c2826c47d0f3219f29554824c30c5e8945175d888647acd804ddd04af846c"},
-    {file = "pygments-2.17.2.tar.gz", hash = "sha256:da46cec9fd2de5be3a8a784f434e4c4ab670b4ff54d605c4c2717e9d49c4c367"},
+    {file = "pygments-2.18.0-py3-none-any.whl", hash = "sha256:b8e6aca0523f3ab76fee51799c488e38782ac06eafcf95e7ba832985c8e7b13a"},
+    {file = "pygments-2.18.0.tar.gz", hash = "sha256:786ff802f32e91311bff3889f6e9a86e81505fe99f2735bb6d60ae0c5004f199"},
 ]
 
 [[package]]
@@ -641,19 +641,22 @@ files = [
 
 [[package]]
 name = "python-box"
-version = "7.1.1"
+version = "7.2.0"
 requires_python = ">=3.8"
 summary = "Advanced Python dictionaries with dot notation access"
 groups = ["default"]
 files = [
-    {file = "python-box-7.1.1.tar.gz", hash = "sha256:2a3df244a5a79ac8f8447b5d11b5be0f2747d7b141cb2866060081ae9b53cc50"},
-    {file = "python_box-7.1.1-cp310-cp310-macosx_11_0_x86_64.whl", hash = "sha256:81ed1ec0f0ff2370227fc07277c5baca46d190a4747631bad7eb6ab1630fb7d9"},
-    {file = "python_box-7.1.1-cp310-cp310-manylinux_2_17_x86_64.manylinux2014_x86_64.whl", hash = "sha256:8891735b4148e84d348c6eadd2f127152f751c9603e35d43a1f496183a291ac4"},
-    {file = "python_box-7.1.1-cp310-cp310-win_amd64.whl", hash = "sha256:0036fd47d388deaca8ebd65aea905f88ee6ef91d1d8ce34898b66f1824afbe80"},
-    {file = "python_box-7.1.1-cp311-cp311-macosx_10_9_universal2.whl", hash = "sha256:aabf8b9ae5dbc8ba431d8cbe0d4cfe737a25d52d68b0f5f2ff34915c21a2c1db"},
-    {file = "python_box-7.1.1-cp311-cp311-manylinux_2_17_x86_64.manylinux2014_x86_64.whl", hash = "sha256:c046608337e723ae4de3206db5d1e1202ed166da2dfdc70c1f9361e72ace5633"},
-    {file = "python_box-7.1.1-cp311-cp311-win_amd64.whl", hash = "sha256:f9266795e9c233874fb5b34fa994054b4fb0371881678e6ec45aec17fc95feac"},
-    {file = "python_box-7.1.1-py3-none-any.whl", hash = "sha256:63b609555554d7a9d4b6e725f8e78ef1717c67e7d386200e03422ad612338df8"},
+    {file = "python_box-7.2.0-cp310-cp310-macosx_11_0_x86_64.whl", hash = "sha256:6bdeec791e25258351388b3029a3ec5da302bb9ed3be175493c43cdc6c47f5e3"},
+    {file = "python_box-7.2.0-cp310-cp310-manylinux_2_17_x86_64.manylinux2014_x86_64.whl", hash = "sha256:c449f7b3756a71479fa9c61a86e344ac00ed782a66d7662590f0afa294249d18"},
+    {file = "python_box-7.2.0-cp310-cp310-win_amd64.whl", hash = "sha256:6b0d61f182d394106d963232854e495b51edc178faa5316a797be1178212d7e0"},
+    {file = "python_box-7.2.0-cp311-cp311-macosx_10_9_universal2.whl", hash = "sha256:e2d752de8c1204255bf7b0c814c59ef48293c187a7e9fdcd2fefa28024b72032"},
+    {file = "python_box-7.2.0-cp311-cp311-manylinux_2_17_x86_64.manylinux2014_x86_64.whl", hash = "sha256:e8a6c35ea356a386077935958a5debcd5b229b9a1b3b26287a52dfe1a7e65d99"},
+    {file = "python_box-7.2.0-cp311-cp311-win_amd64.whl", hash = "sha256:32ed58ec4d9e5475efe69f9c7d773dfea90a6a01979e776da93fd2b0a5d04429"},
+    {file = "python_box-7.2.0-cp312-cp312-macosx_10_9_universal2.whl", hash = "sha256:2a2d664c6a27f7515469b6f1e461935a2038ee130b7d194b4b4db4e85d363618"},
+    {file = "python_box-7.2.0-cp312-cp312-manylinux_2_17_x86_64.manylinux2014_x86_64.whl", hash = "sha256:e8a5a7365db1aaf600d3e8a2747fcf6833beb5d45439a54318548f02e302e3ec"},
+    {file = "python_box-7.2.0-cp312-cp312-win_amd64.whl", hash = "sha256:739f827056ea148cbea3122d4617c994e829b420b1331183d968b175304e3a4f"},
+    {file = "python_box-7.2.0-py3-none-any.whl", hash = "sha256:a3c90832dd772cb0197fdb5bc06123b6e1b846899a1b53d9c39450d27a584829"},
+    {file = "python_box-7.2.0.tar.gz", hash = "sha256:551af20bdab3a60a2a21e3435120453c4ca32f7393787c3a5036e1d9fc6a0ede"},
 ]
 
 [[package]]
@@ -721,24 +724,24 @@ files = [
 
 [[package]]
 name = "tomlkit"
-version = "0.12.3"
+version = "0.12.5"
 requires_python = ">=3.7"
 summary = "Style preserving TOML library"
 groups = ["dev"]
 files = [
-    {file = "tomlkit-0.12.3-py3-none-any.whl", hash = "sha256:b0a645a9156dc7cb5d3a1f0d4bab66db287fcb8e0430bdd4664a095ea16414ba"},
-    {file = "tomlkit-0.12.3.tar.gz", hash = "sha256:75baf5012d06501f07bee5bf8e801b9f343e7aac5a92581f20f80ce632e6b5a4"},
+    {file = "tomlkit-0.12.5-py3-none-any.whl", hash = "sha256:af914f5a9c59ed9d0762c7b64d3b5d5df007448eb9cd2edc8a46b1eafead172f"},
+    {file = "tomlkit-0.12.5.tar.gz", hash = "sha256:eef34fba39834d4d6b73c9ba7f3e4d1c417a4e56f89a7e96e090dd0d24b8fb3c"},
 ]
 
 [[package]]
 name = "traitlets"
-version = "5.14.1"
+version = "5.14.3"
 requires_python = ">=3.8"
 summary = "Traitlets Python configuration system"
 groups = ["dev"]
 files = [
-    {file = "traitlets-5.14.1-py3-none-any.whl", hash = "sha256:2e5a030e6eff91737c643231bfcf04a65b0132078dad75e4936700b213652e74"},
-    {file = "traitlets-5.14.1.tar.gz", hash = "sha256:8585105b371a04b8316a43d5ce29c098575c2e477850b62b848b964f1444527e"},
+    {file = "traitlets-5.14.3-py3-none-any.whl", hash = "sha256:b74e89e397b1ed28cc831db7aea759ba6640cb3de13090ca145426688ff1ac4f"},
+    {file = "traitlets-5.14.3.tar.gz", hash = "sha256:9ed0579d3502c94b4b3732ac120375cda96f923114522847de4b3bb98b96b6b7"},
 ]
 
 [[package]]
@@ -770,13 +773,13 @@ files = [
 
 [[package]]
 name = "typing-extensions"
-version = "4.9.0"
+version = "4.12.2"
 requires_python = ">=3.8"
 summary = "Backported and Experimental Type Hints for Python 3.8+"
 groups = ["default", "dev"]
 files = [
-    {file = "typing_extensions-4.9.0-py3-none-any.whl", hash = "sha256:af72aea155e91adfc61c3ae9e0e342dbc0cba726d6cba4b6c72c1f34e47291cd"},
-    {file = "typing_extensions-4.9.0.tar.gz", hash = "sha256:23478f88c37f27d76ac8aee6c905017a143b0b1b886c3c9f66bc2fd94f9f5783"},
+    {file = "typing_extensions-4.12.2-py3-none-any.whl", hash = "sha256:04e5ca0351e0f3f85c6853954072df659d0d13fac324d0072316b67d7794700d"},
+    {file = "typing_extensions-4.12.2.tar.gz", hash = "sha256:1a7ead55c7e559dd4dee8856e3a88b41225abfe1ce8df57b7c13915fe121ffb8"},
 ]
 
 [[package]]
@@ -807,11 +810,11 @@ files = [
 
 [[package]]
 name = "zipp"
-version = "3.17.0"
+version = "3.19.2"
 requires_python = ">=3.8"
 summary = "Backport of pathlib-compatible object wrapper for zip files"
 groups = ["dev"]
 files = [
-    {file = "zipp-3.17.0-py3-none-any.whl", hash = "sha256:0e923e726174922dce09c53c59ad483ff7bbb8e572e00c7f7c46b88556409f31"},
-    {file = "zipp-3.17.0.tar.gz", hash = "sha256:84e64a1c28cf7e91ed2078bb8cc8c259cb19b76942096c8d7b84947690cabaf0"},
+    {file = "zipp-3.19.2-py3-none-any.whl", hash = "sha256:f091755f667055f2d02b32c53771a7a6c8b47e1fdbc4b72a8b9072b3eef8015c"},
+    {file = "zipp-3.19.2.tar.gz", hash = "sha256:bf1dcf6450f873a13e952a29504887c89e6de7506209e5b1bcc3460135d4de19"},
 ]
