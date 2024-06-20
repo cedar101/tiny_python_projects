@@ -1,12 +1,13 @@
 #!/usr/bin/env python3
 """
-usage: bottles.py [-h] [-n NUMBER]
+usage: bottles.py [-h] [-r] [-n NUMBER]
 
 Bottles of beer song
 
 options:
   -h, --help                show this help message and exit
-  -n NUMBER, --num NUMBER   How many bottles [type: int] [default: 10] 
+  -n NUMBER, --num NUMBER   How many bottles [type: int] [default: 10]
+  -r, --reverse
 """
 
 from type_docopt import docopt, DocoptExit
@@ -36,7 +37,14 @@ def main():
     """Make a jazz noise here"""
 
     args = get_args()
-    print("\n\n".join(map(verse, range(args.num, 0, -1))))
+    print(
+        "\n\n".join(
+            verse(bottle)
+            for bottle in (
+                range(1, args.num + 1) if args.reverse else range(args.num, 0, -1)
+            )
+        )
+    )
 
 
 # --------------------------------------------------
