@@ -41,8 +41,13 @@ def main():
     args = get_args()
     random.seed(args.seed)
 
-    # Method 6: map
-    print("".join(map(choose, args.text_)))
+    # Method 7: generator
+    print("".join(ransom_gen(args.text_)))
+
+
+def ransom_gen(text):
+    for char in text:
+        yield choose(char)
 
 
 # --------------------------------------------------

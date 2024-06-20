@@ -41,8 +41,12 @@ def main():
     args = get_args()
     random.seed(args.seed)
 
-    # Method 6: map
-    print("".join(map(choose, args.text_)))
+    # Method 3: Iterate each character, add to a str
+    ransom = ""
+    for char in args.text_:
+        ransom += choose(char)
+
+    print("".join(ransom))
 
 
 # --------------------------------------------------

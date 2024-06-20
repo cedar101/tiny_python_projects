@@ -41,8 +41,8 @@ def main():
     args = get_args()
     random.seed(args.seed)
 
-    # Method 6: map
-    print("".join(map(choose, args.text_)))
+    # Method 5: Generator expression
+    print("".join(choose(char) for char in args.text_))
 
 
 # --------------------------------------------------

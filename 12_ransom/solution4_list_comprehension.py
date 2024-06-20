@@ -1,32 +1,35 @@
 #!/usr/bin/env python3
-"""Ransom note"""
+"""
+usage: {} [-h] [-s SEED] <text>
 
-import argparse
-import os
+Ransom Note
+
+positional arguments:
+  <text>                Input text or file
+
+options:
+  -h, --help            show this help message and exit
+  -s SEED, --seed=SEED  Random seed [type: int]
+"""
+from pathlib import Path
 import random
+from type_docopt import docopt, DocoptExit
+from box import Box
 
 
 # --------------------------------------------------
 def get_args():
     """Get command-line arguments"""
 
-    parser = argparse.ArgumentParser(
-        description='Ransom Note',
-        formatter_class=argparse.ArgumentDefaultsHelpFormatter)
+    docstring = __doc__.format(Path(__file__).name)
+    try:
+        args = Box(docopt(docstring))
+    except ValueError as e:
+        raise DocoptExit(f"error: {e}") from e
 
-    parser.add_argument('text', metavar='text', help='Input text or file')
-
-    parser.add_argument('-s',
-                        '--seed',
-                        help='Random seed',
-                        metavar='int',
-                        type=int,
-                        default=None)
-
-    args = parser.parse_args()
-
-    if os.path.isfile(args.text):
-        args.text = open(args.text).read().rstrip()
+    p = Path(args.text_)
+    if p.is_file():
+        args.text_ = p.read_text()
 
     return args
 
@@ -39,30 +42,16 @@ def main():
     random.seed(args.seed)
 
     # Method 4: List comprehension
-    ransom = [choose(char) for char in args.text]
-    print(''.join(ransom))
+    print("".join([choose(char) for char in args.text_]))
 
 
 # --------------------------------------------------
 def choose(char):
     """Randomly choose an upper or lowercase letter to return"""
 
-    return char.upper() if random.choice([0, 1]) else char.lower()
+    return random.choice((char.lower, char.upper))()
 
 
 # --------------------------------------------------
-def test_choose():
-    """Test choose"""
-
-    state = random.getstate()
-    random.seed(1)
-    assert choose('a') == 'a'
-    assert choose('b') == 'b'
-    assert choose('c') == 'C'
-    assert choose('d') == 'd'
-    random.setstate(state)
-
-
-# --------------------------------------------------
-if __name__ == '__main__':
+if __name__ == "__main__":
     main()

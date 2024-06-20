@@ -17,7 +17,6 @@ options:
 from pathlib import Path
 import random
 import string
-from itertools import chain
 
 from type_docopt import docopt, DocoptExit
 from box import Box
