@@ -109,6 +109,25 @@ def test_two():
 
 
 # --------------------------------------------------
+def test_two_reversed():
+    """Two bottles of beer"""
+
+    expected = (
+        "1 bottle of beer on the wall,\n"
+        "1 bottle of beer,\n"
+        "Take one down, pass it around,\n"
+        "No more bottles of beer on the wall!\n\n"
+        "2 bottles of beer on the wall,\n"
+        "2 bottles of beer,\n"
+        "Take one down, pass it around,\n"
+        "1 bottle of beer on the wall!\n"
+    )
+
+    out = check_output([prg, "-r", "-n", "2"], text=True)
+    assert out == expected
+
+
+# --------------------------------------------------
 @pytest.mark.parametrize("n", random.choices(list(sums.keys()), k=10))
 def test_random(n):
     """Random number"""
