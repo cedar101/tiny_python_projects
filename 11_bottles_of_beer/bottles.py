@@ -9,6 +9,7 @@ options:
   -n NUMBER, --num NUMBER   How many bottles [type: int] [default: 10]
   -r, --reverse
 """
+from textwrap import dedent
 
 from type_docopt import docopt, DocoptExit
 from box import Box
@@ -35,7 +36,6 @@ def get_args():
 # --------------------------------------------------
 def main():
     """Make a jazz noise here"""
-
     args = get_args()
     print(
         "\n\n".join(
@@ -55,13 +55,12 @@ def verse(bottle):
     s1 = "" if bottle == 1 else "s"
     s2 = "" if next_bottle == 1 else "s"
     num_next = "No more" if next_bottle == 0 else next_bottle
-    return "\n".join(
-        [
-            f"{bottle} bottle{s1} of beer on the wall,",
-            f"{bottle} bottle{s1} of beer,",
-            f"Take one down, pass it around,",
-            f"{num_next} bottle{s2} of beer on the wall!",
-        ]
+    return dedent(
+        f"""\
+        {bottle} bottle{s1} of beer on the wall,
+        {bottle} bottle{s1} of beer,
+        Take one down, pass it around,
+        {num_next} bottle{s2} of beer on the wall!"""
     )
 
 
