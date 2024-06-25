@@ -31,19 +31,9 @@ day_two = dedent(
 
 
 # --------------------------------------------------
-@pytest.fixture(name="out_file")
-def out_file():
-    """generate a random string filename"""
-
-    k = random.randint(5, 10)
-    return "".join(random.choices(string.ascii_letters + string.digits, k=k))
-
-
-# --------------------------------------------------
 def test_exists():
     """exists"""
     assert Path(prg).is_file()
-
     assert test_out.exists()
 
 
@@ -92,7 +82,7 @@ def test_all_stdout():
 
 # --------------------------------------------------
 @pytest.mark.parametrize("n", range(1, 13))
-def test_all(n, out_file):
+def test_all(n):
     """Test 1-12"""
     # Normal run (STDOUT)
     expected_file = test_out / f"{n}.out"
