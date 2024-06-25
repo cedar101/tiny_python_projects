@@ -5,61 +5,70 @@ import random
 import string
 from pathlib import Path
 from subprocess import check_output, CalledProcessError, STDOUT
+from textwrap import dedent
+import tempfile
+import itertools
 
 import pytest
 
 prg = "./twelve_days.py"
+test_out = Path("./test-out")
 
-day_one = "\n".join(
-    [
-        "On the first day of Christmas,",
-        "My true love gave to me,",
-        "A partridge in a pear tree.",
-    ]
+day_one = dedent(
+    """\
+    On the first day of Christmas,
+    My true love gave to me,
+    A partridge in a pear tree."""
 )
 
-day_two = "\n".join(
-    [
-        "On the second day of Christmas,",
-        "My true love gave to me,",
-        "Two turtle doves,",
-        "And a partridge in a pear tree.",
-    ]
+day_two = dedent(
+    """\
+    On the second day of Christmas,
+    My true love gave to me,
+    Two turtle doves,
+    And a partridge in a pear tree."""
 )
+
+
+# --------------------------------------------------
+@pytest.fixture(name="out_file")
+def out_file():
+    """generate a random string filename"""
+
+    k = random.randint(5, 10)
+    return "".join(random.choices(string.ascii_letters + string.digits, k=k))
 
 
 # --------------------------------------------------
 def test_exists():
     """exists"""
+    assert Path(prg).is_file()
 
-    assert os.path.isfile(prg)
+    assert test_out.exists()
 
 
 # --------------------------------------------------
-def test_usage():
+@pytest.mark.parametrize("flag", ["-h", "--help"])
+def test_usage(flag):
     """usage"""
-
-    for flag in ["-h", "--help"]:
-        rv, out = getstatusoutput(f"{prg} {flag}")
-        assert rv == 0
-        assert re.match("usage", out, re.IGNORECASE)
+    out = check_output([prg, flag])
+    assert b"usage" in out.lower()
 
 
 # --------------------------------------------------
-def test_bad_num():
-    """test bad_num"""
-
-    for n in [random.choice(r) for r in (range(-10, -1), range(13, 20))]:
-        rv, out = getstatusoutput(f"{prg} -n {n}")
-        assert rv != 0
-        assert re.search(f'--num "{n}" must be between 1 and 12', out)
+@pytest.mark.parametrize("n", [random.randrange(-10, 1), random.randrange(13, 20)])
+def test_bad_num(n):
+    """test bad number"""
+    with pytest.raises(CalledProcessError) as excinfo:
+        check_output([prg, "-n", str(n)], text=True, stderr=STDOUT)
+    assert f'--num "{n}" must be between 1 and 12' in excinfo.value.stdout
 
 
 # --------------------------------------------------
 def test_one():
     """test one"""
 
-    out = getoutput(f"{prg} -n 1")
+    out = check_output([prg, "-n", "1"], text=True)
     assert out.rstrip() == day_one
 
 
@@ -67,58 +76,39 @@ def test_one():
 def test_two():
     """test two"""
 
-    out = getoutput(f"{prg} --num 2")
-    assert out == "\n\n".join([day_one, day_two])
+    out = check_output([prg, "--num", "2"], text=True)
+    assert out.rstrip() == f"{day_one}\n\n{day_two}"
 
 
 # --------------------------------------------------
 def test_all_stdout():
     """test"""
 
-    out = getoutput(f"{prg}").splitlines()
+    out = check_output([prg], text=True).splitlines()
     assert len(out) == 113
     assert out[0] == "On the first day of Christmas,"
     assert out[-1] == "And a partridge in a pear tree."
 
 
 # --------------------------------------------------
-def test_all():
+@pytest.mark.parametrize("n", range(1, 13))
+def test_all(n, out_file):
     """Test 1-12"""
+    # Normal run (STDOUT)
+    expected_file = test_out / f"{n}.out"
+    assert expected_file.is_file()
+    with open(expected_file) as f:
+        expected = f.read().rstrip()
 
-    test_out = "./test-out"
-    assert os.path.isdir(test_out)
+    cmd = [prg, "-n", str(n)]
+    out = check_output(cmd, text=True).rstrip()
+    assert out == expected
 
-    for n in range(1, 13):
-        print(n)
-        # Normal run (STDOUT)
-        expected_file = os.path.join(test_out, f"{n}.out")
-        assert os.path.isfile(expected_file)
-        expected = open(expected_file).read().rstrip()
-
-        cmd = f"{prg} -n {n}"
-        out = getoutput(cmd).rstrip()
-        assert out == expected
-
-        # Run with --outfile
-        out_file = random_string()
-        if os.path.isfile(out_file):
-            os.remove(out_file)
-
-        try:
-            out = getoutput(cmd + f" -o {out_file}").rstrip()
-            assert out == ""
-            assert os.path.isfile(out_file)
-            output = open(out_file).read().rstrip()
-            assert len(output.split("\n")) == len(expected.split("\n"))
-            assert output.rstrip() == expected.rstrip()
-        finally:
-            if os.path.isfile(out_file):
-                os.remove(out_file)
-
-
-# --------------------------------------------------
-def random_string():
-    """generate a random string"""
-
-    k = random.randint(5, 10)
-    return "".join(random.choices(string.ascii_letters + string.digits, k=k))
+    # Run with --outfile
+    with tempfile.NamedTemporaryFile("w+") as out_file:
+        assert not check_output(
+            itertools.chain(cmd, ["-o", out_file.name]), text=True
+        ).rstrip()
+        output = out_file.read().rstrip()
+        assert len(output.split("\n")) == len(expected.split("\n"))
+        assert output.rstrip() == expected.rstrip()
