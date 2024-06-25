@@ -6,6 +6,7 @@ import random
 import string
 from pathlib import Path
 from subprocess import check_output, CalledProcessError, STDOUT
+from textwrap import dedent
 
 import pytest
 
@@ -78,11 +79,13 @@ def test_float(bad_float):
 def test_one():
     """One bottle of beer"""
 
-    expected = (
-        "1 bottle of beer on the wall,\n"
-        "1 bottle of beer,\n"
-        "Take one down, pass it around,\n"
-        "No more bottles of beer on the wall!\n"
+    expected = dedent(
+        """\
+        1 bottle of beer on the wall,
+        1 bottle of beer,
+        Take one down, pass it around,
+        No more bottles of beer on the wall!
+        """
     )
 
     out = check_output([prg, "--num", "1"], text=True)
@@ -93,15 +96,18 @@ def test_one():
 def test_two():
     """Two bottles of beer"""
 
-    expected = (
-        "2 bottles of beer on the wall,\n"
-        "2 bottles of beer,\n"
-        "Take one down, pass it around,\n"
-        "1 bottle of beer on the wall!\n\n"
-        "1 bottle of beer on the wall,\n"
-        "1 bottle of beer,\n"
-        "Take one down, pass it around,\n"
-        "No more bottles of beer on the wall!\n"
+    expected = dedent(
+        """\
+        2 bottles of beer on the wall,
+        2 bottles of beer,
+        Take one down, pass it around,
+        1 bottle of beer on the wall!
+        
+        1 bottle of beer on the wall,
+        1 bottle of beer,
+        Take one down, pass it around,
+        No more bottles of beer on the wall!
+        """
     )
 
     out = check_output([prg, "-n", "2"], text=True)
@@ -112,15 +118,18 @@ def test_two():
 def test_two_reversed():
     """Two bottles of beer"""
 
-    expected = (
-        "1 bottle of beer on the wall,\n"
-        "1 bottle of beer,\n"
-        "Take one down, pass it around,\n"
-        "No more bottles of beer on the wall!\n\n"
-        "2 bottles of beer on the wall,\n"
-        "2 bottles of beer,\n"
-        "Take one down, pass it around,\n"
-        "1 bottle of beer on the wall!\n"
+    expected = dedent(
+        """\
+        1 bottle of beer on the wall,
+        1 bottle of beer,
+        Take one down, pass it around,
+        No more bottles of beer on the wall!
+        
+        2 bottles of beer on the wall,
+        2 bottles of beer,
+        Take one down, pass it around,
+        1 bottle of beer on the wall!
+        """
     )
 
     out = check_output([prg, "-r", "-n", "2"], text=True)
