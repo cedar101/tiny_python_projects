@@ -50,8 +50,8 @@ GIFTS = [
     ],
     [
         "A :bird: in a pear tree.",
-        "Two turtle :bird:s,",
-        "Three French :bird:s,",
+        "Two turtle :swan:s,",
+        "Three French :chicken:s,",
         "Four calling :bird:s,",
         "Five gold :ring:s,",
         "Six :bird:s a laying,",
