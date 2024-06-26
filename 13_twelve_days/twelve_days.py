@@ -16,6 +16,37 @@ from type_docopt import docopt, DocoptExit
 from box import Box
 
 
+ORDINAL = [
+    "first",
+    "second",
+    "third",
+    "fourth",
+    "fifth",
+    "sixth",
+    "seventh",
+    "eighth",
+    "ninth",
+    "tenth",
+    "eleventh",
+    "twelfth",
+]
+
+GIFTS = [
+    "A partridge in a pear tree.",
+    "Two turtle doves,",
+    "Three French hens,",
+    "Four calling birds,",
+    "Five gold rings,",
+    "Six geese a laying,",
+    "Seven swans a swimming,",
+    "Eight maids a milking,",
+    "Nine ladies dancing,",
+    "Ten lords a leaping,",
+    "Eleven pipers piping,",
+    "Twelve drummers drumming,",
+]
+
+
 # --------------------------------------------------
 def get_args():
     """Get command-line arguments"""
@@ -57,40 +88,8 @@ def main():
 # --------------------------------------------------
 def verse(day):
     """Create a verse"""
-
-    ordinal = [
-        "first",
-        "second",
-        "third",
-        "fourth",
-        "fifth",
-        "sixth",
-        "seventh",
-        "eighth",
-        "ninth",
-        "tenth",
-        "eleventh",
-        "twelfth",
-    ]
-
-    gifts = [
-        "A partridge in a pear tree.",
-        "Two turtle doves,",
-        "Three French hens,",
-        "Four calling birds,",
-        "Five gold rings,",
-        "Six geese a laying,",
-        "Seven swans a swimming,",
-        "Eight maids a milking,",
-        "Nine ladies dancing,",
-        "Ten lords a leaping,",
-        "Eleven pipers piping,",
-        "Twelve drummers drumming,",
-    ]
-
-    lines = [f"On the {ordinal[day - 1]} day of Christmas,", "My true love gave to me,"]
-
-    lines.extend(reversed(gifts[:day]))
+    lines = [f"On the {ORDINAL[day - 1]} day of Christmas,", "My true love gave to me,"]
+    lines.extend(GIFTS[day - 1 :: -1])  # reversed(GIFTS[:day]))
 
     if day > 1:
         lines[-1] = f"And {lines[-1].lower()}"
