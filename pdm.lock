@@ -5,7 +5,7 @@
 groups = ["default", "dev"]
 strategy = ["cross_platform", "inherit_metadata"]
 lock_version = "4.4.1"
-content_hash = "sha256:c39ae1757b4381ec4d89d31572722ea40038f100db2c8021721ec745227a2525"
+content_hash = "sha256:b2387587db14bfc9c601cc4526d4ad24a7edbf821fa133c7793d27342d9b05b1"
 
 [[package]]
 name = "annotated-types"
@@ -142,6 +142,20 @@ summary = "Pythonic argument parser, that will make you smile"
 groups = ["default"]
 files = [
     {file = "docopt-0.6.2.tar.gz", hash = "sha256:49b3a825280bd66b3aa83585ef59c4a8c82f2c8a522dbe754a8bc8d08c85c491"},
+]
+
+[[package]]
+name = "emoji"
+version = "2.12.1"
+requires_python = ">=3.7"
+summary = "Emoji for Python"
+groups = ["default"]
+dependencies = [
+    "typing-extensions>=4.7.0",
+]
+files = [
+    {file = "emoji-2.12.1-py3-none-any.whl", hash = "sha256:a00d62173bdadc2510967a381810101624a2f0986145b8da0cffa42e29430235"},
+    {file = "emoji-2.12.1.tar.gz", hash = "sha256:4aa0488817691aa58d83764b6c209f8a27c0b3ab3f89d1b8dceca1a62e4973eb"},
 ]
 
 [[package]]
