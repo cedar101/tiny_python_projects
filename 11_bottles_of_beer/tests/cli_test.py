@@ -58,21 +58,21 @@ def test_string(bad_str):
 
 
 # --------------------------------------------------
-def test_bad_int(bad_int):
-    """Bad integer value"""
-    with pytest.raises(CalledProcessError) as excinfo:
-        check_output([prg, "-n", str(bad_int)], text=True, stderr=STDOUT)
-    assert "usage" in excinfo.value.stdout.lower()
-    assert f'--num "{bad_int}" must be greater than 0' in excinfo.value.stdout
-
-
-# --------------------------------------------------
 def test_float(bad_float):
     """float value"""
     with pytest.raises(CalledProcessError) as excinfo:
         check_output([prg, "--num", str(bad_float)], text=True, stderr=STDOUT)
     assert "usage" in excinfo.value.stdout.lower()
     assert f"invalid int value: '{bad_float}'" in excinfo.value.stdout
+
+
+# --------------------------------------------------
+def test_bad_int(bad_int):
+    """Bad integer value"""
+    with pytest.raises(CalledProcessError) as excinfo:
+        check_output([prg, "-n", str(bad_int)], text=True, stderr=STDOUT)
+    assert "usage" in excinfo.value.stdout.lower()
+    assert f'--num "{bad_int}" must be greater than 0' in excinfo.value.stdout
 
 
 # --------------------------------------------------

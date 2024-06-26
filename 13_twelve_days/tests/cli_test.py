@@ -12,6 +12,7 @@ import itertools
 import pytest
 
 prg = "./twelve_days.py"
+# prg = "./solution.py"
 test_out = Path("./test-out")
 
 day_one = dedent(
@@ -97,7 +98,7 @@ def test_all(n):
     # Run with --outfile
     with tempfile.NamedTemporaryFile("w+") as out_file:
         assert not check_output(
-            itertools.chain(cmd, ["-o", out_file.name]), text=True
+            list(itertools.chain(cmd, ["-o", out_file.name])), text=True
         ).rstrip()
         output = out_file.read().rstrip()
         assert len(output.split("\n")) == len(expected.split("\n"))

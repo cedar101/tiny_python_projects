@@ -6,9 +6,10 @@ Twelve Days of Christmas
 
 options:
   -h, --help                show this help message and exit
-  -n DAYS, --num DAYS       Number of days to sing [type: int] [default: 12] [choices: {day_choices}]
-  -o FILE, --outfile FILE   Output file [type: path]
+  -n DAYS, --num=DAYS       Number of days to sing [type: int] [default: 12] [choices: {day_choices}]
+  -o FILE, --outfile=FILE   Output file [type: path]
 """
+import sys
 from pathlib import Path
 
 from type_docopt import docopt, DocoptExit
@@ -20,16 +21,24 @@ def get_args():
     """Get command-line arguments"""
     try:
         args = Box(
-            docopt(__doc__.format(day_choices=" ".join(str(n) for n in range(1, 13))))
+            docopt(
+                __doc__.format(day_choices=" ".join(str(n) for n in range(1, 13))),
+                types={"path": Path},
+            )
         )
-    except ValueError as e:
-        strerr = str(e)
-        if "invalid literal for int() with base 10" in strerr:
-            _0, _1, invalid_literal = strerr.rpartition(" ")
-            strerr = f"invalid int value: {invalid_literal}"
-        raise DocoptExit(f"error: {strerr}") from e
-    # if args.num not in range(1, 13):
-    #     parser.error(f'--num "{args.num}" must be between 1 and 12')
+    except ValueError as exc_not_in:
+        # breakpoint()
+        num_str, _1, _2 = str(exc_not_in).partition(" ")
+        try:
+            num = int(num_str)
+        except ValueError as exc_invalid:
+            _0, _1, invalid = str(exc_invalid).rpartition(" ")
+            raise DocoptExit(
+                f"error: argument -n/--num: invalid int value: {invalid}"
+            ) from exc_invalid
+        raise DocoptExit(
+            f'error: --num "{num_str}" must be between 1 and 12'
+        ) from exc_not_in
 
     return args
 
@@ -39,8 +48,10 @@ def main():
     """Make a jazz noise here"""
 
     args = get_args()
-    verses = map(verse, range(1, args.num + 1))
-    print("\n\n".join(verses), file=args.outfile)
+    verses = (verse(n) for n in range(1, args.num + 1))
+
+    with args.outfile.open("w") if args.outfile else sys.stdout as outfile:
+        print("\n\n".join(verses), file=outfile)
 
 
 # --------------------------------------------------
@@ -82,7 +93,7 @@ def verse(day):
     lines.extend(reversed(gifts[:day]))
 
     if day > 1:
-        lines[-1] = "And " + lines[-1].lower()
+        lines[-1] = f"And {lines[-1].lower()}"
 
     return "\n".join(lines)
 
