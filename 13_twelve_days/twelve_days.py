@@ -75,7 +75,6 @@ def get_args():
                 types={"path": Path},
             )
         )
-        print(args)
     except ValueError as exc_not_in:
         # breakpoint()
         num_str, _1, _2 = str(exc_not_in).partition(" ")
